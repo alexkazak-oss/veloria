@@ -1,0 +1,138 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { buildSEO } from '../../lib/seo';
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro';
+import type { Locale } from '../../i18n/index';
+
+const locale = 'en' as Locale;
+const seo = buildSEO({
+  title      : 'Contact Us — Veloria Casino',
+  description: 'Get in touch with the Veloria Casino support team. We are available 24/7 via live chat and email.',
+  canonical  : 'https://veloria.casino/en/contacts/',
+  locale,
+  siteName   : 'Veloria Casino',
+});
+
+const channels = [
+  {
+    icon: '💬',
+    title: 'Live Chat',
+    desc: 'Chat with a support agent in real time. Average response time: under 2 minutes.',
+    action: 'Start Chat',
+    availability: '24/7',
+  },
+  {
+    icon: '📧',
+    title: 'Email Support',
+    desc: 'Send a detailed request to support@veloria.casino. We reply within 2 hours on average.',
+    action: 'Send Email',
+    availability: 'Reply in 2h',
+  },
+  {
+    icon: '❓',
+    title: 'Help Centre',
+    desc: 'Browse 24 help articles across 5 categories — most questions are answered instantly.',
+    action: 'Browse FAQ',
+    availability: 'Self-service',
+    href: '/en/help/',
+  },
+];
+---
+
+<PageLayout {...seo} locale={locale} current="/en/contacts/">
+  <div class="container py-8 md:py-14 max-w-4xl">
+    <Breadcrumbs items={[{ label: 'Home', href: '/en/' }, { label: 'Contact Us', href: '/en/contacts/' }]} locale={locale} />
+
+    <div class="mt-8 mb-10">
+      <h1 class="text-headline text-[var(--color-text-primary)] mb-3">Contact Us</h1>
+      <p class="text-[var(--color-text-secondary)]">
+        Our support team is here for you 24 hours a day, 7 days a week.
+      </p>
+    </div>
+
+    <!-- Contact channels -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-14">
+      {channels.map(({ icon, title, desc, action, availability, href }) => (
+        <div class="card p-6 flex flex-col">
+          <span class="text-4xl mb-4" aria-hidden="true">{icon}</span>
+          <h2 class="font-bold text-[var(--color-text-primary)] mb-1">{title}</h2>
+          <p class="text-xs text-[var(--color-primary-400)] mb-3">{availability}</p>
+          <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed flex-1 mb-4">{desc}</p>
+          <a
+            href={href ?? '#'}
+            class="inline-flex items-center justify-center px-5 py-2 rounded-[var(--radius-xl)] text-sm font-medium border border-[var(--color-primary-500)] text-[var(--color-primary-400)] hover:bg-[var(--color-primary-600)]22 transition-colors"
+          >
+            {action}
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <!-- Mock contact form -->
+    <div class="max-w-lg mx-auto">
+      <h2 class="text-xl font-bold text-[var(--color-text-primary)] mb-6 text-center">Send Us a Message</h2>
+      <form
+        class="space-y-4"
+        aria-label="Contact form (demo only)"
+        onsubmit="event.preventDefault(); alert('Demo form — not connected to any backend.');"
+      >
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-[var(--color-text-secondary)] mb-1.5" for="contact-name">Name</label>
+            <input
+              id="contact-name"
+              type="text"
+              autocomplete="name"
+              placeholder="Your name"
+              class="w-full px-4 py-2.5 text-sm rounded-[var(--radius-xl)] bg-[var(--color-bg-surface)] border border-[var(--color-border)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-primary-500)] transition-colors"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-[var(--color-text-secondary)] mb-1.5" for="contact-email">Email</label>
+            <input
+              id="contact-email"
+              type="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+              class="w-full px-4 py-2.5 text-sm rounded-[var(--radius-xl)] bg-[var(--color-bg-surface)] border border-[var(--color-border)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-primary-500)] transition-colors"
+            />
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-[var(--color-text-secondary)] mb-1.5" for="contact-subject">Subject</label>
+          <select
+            id="contact-subject"
+            class="w-full px-4 py-2.5 text-sm rounded-[var(--radius-xl)] bg-[var(--color-bg-surface)] border border-[var(--color-border)] text-[var(--color-text-secondary)] focus:outline-none focus:border-[var(--color-primary-500)] transition-colors"
+          >
+            <option value="">Select a topic…</option>
+            <option>Account & Login</option>
+            <option>Deposits & Withdrawals</option>
+            <option>Bonuses & Promotions</option>
+            <option>Technical Issue</option>
+            <option>Responsible Gaming</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-[var(--color-text-secondary)] mb-1.5" for="contact-message">Message</label>
+          <textarea
+            id="contact-message"
+            rows="5"
+            placeholder="Describe your issue in detail…"
+            class="w-full px-4 py-2.5 text-sm rounded-[var(--radius-xl)] bg-[var(--color-bg-surface)] border border-[var(--color-border)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-primary-500)] transition-colors resize-none"
+          ></textarea>
+        </div>
+        <button
+          type="submit"
+          class="w-full py-3 rounded-[var(--radius-xl)] text-sm font-bold text-[var(--color-text-primary)]"
+          style="background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-700)); box-shadow: var(--shadow-glow-primary);"
+        >
+          Send Message
+        </button>
+        <p class="text-xs text-[var(--color-text-muted)] text-center">
+          Demo form — not connected to any backend server.
+        </p>
+      </form>
+    </div>
+  </div>
+</PageLayout>

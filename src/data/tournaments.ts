@@ -1,0 +1,240 @@
+import type {Tournament} from '../types/tournament'
+
+export const tournaments: Tournament[] = [
+	{
+		id: 'veloria-grand-prix',
+		title: 'Veloria Grand Prix',
+		description:
+			'The biggest monthly tournament at Veloria. Compete on any slot for points and claim your share of the €50,000 prize pool.',
+		status: 'active',
+		prizePool: '€50,000',
+		playerCount: 1842,
+		maxPlayers: 5000,
+		startDate: '2026-03-01T00:00:00Z',
+		endDate: '2026-03-31T23:59:59Z',
+		games: ['starburst-mega', 'golden-dynasty', 'cyber-reels', 'crystal-vault'],
+		gradient: 'linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%)',
+		minBet: 0.5,
+		rules: [
+			'Earn 1 tournament point per €1 wagered on eligible slots.',
+			'Minimum bet per round: €0.50.',
+			'Points accumulate over the full calendar month.',
+			'Top 200 players share in the prize pool.',
+			'Prizes credited as withdrawable cash within 48h of tournament end.',
+			'Veloria reserves the right to disqualify players for abuse.',
+		],
+		leaderboard: [
+			{
+				rank: 1,
+				playerName: 'StarSeeker_99',
+				score: 148500,
+				prize: '€10,000',
+				avatar: 'SS',
+			},
+			{
+				rank: 2,
+				playerName: 'NightRoller',
+				score: 134200,
+				prize: '€6,000',
+				avatar: 'NR',
+			},
+			{
+				rank: 3,
+				playerName: 'DoubleUp_K',
+				score: 121800,
+				prize: '€4,000',
+				avatar: 'DK',
+			},
+			{
+				rank: 4,
+				playerName: 'GoldSpinner',
+				score: 109300,
+				prize: '€2,500',
+				avatar: 'GS',
+			},
+			{
+				rank: 5,
+				playerName: 'LuckyViolet',
+				score: 98700,
+				prize: '€2,000',
+				avatar: 'LV',
+			},
+			{
+				rank: 6,
+				playerName: 'CrystalEdge',
+				score: 87400,
+				prize: '€1,500',
+				avatar: 'CE',
+			},
+			{
+				rank: 7,
+				playerName: 'HighVolt_27',
+				score: 76200,
+				prize: '€1,200',
+				avatar: 'HV',
+			},
+			{
+				rank: 8,
+				playerName: 'SlotMaestro',
+				score: 65100,
+				prize: '€1,000',
+				avatar: 'SM',
+			},
+			{
+				rank: 9,
+				playerName: 'NeonWave',
+				score: 54800,
+				prize: '€750',
+				avatar: 'NW',
+			},
+			{
+				rank: 10,
+				playerName: 'FortuneMatrix',
+				score: 44300,
+				prize: '€500',
+				avatar: 'FM',
+			},
+		],
+	},
+	{
+		id: 'live-casino-masters',
+		title: 'Live Casino Masters',
+		description:
+			'Show your skill at the live tables. Points awarded for every qualified hand of blackjack or spin of live roulette.',
+		status: 'active',
+		prizePool: '€25,000',
+		playerCount: 634,
+		maxPlayers: 2000,
+		startDate: '2026-03-15T00:00:00Z',
+		endDate: '2026-04-15T23:59:59Z',
+		games: [
+			'live-blackjack-vip',
+			'live-roulette-gold',
+			'live-baccarat-prestige',
+		],
+		gradient: 'linear-gradient(135deg, #059669 0%, #064e3b 100%)',
+		minBet: 5,
+		rules: [
+			'Points earned on live blackjack, roulette, and baccarat only.',
+			'Minimum qualifying bet: €5 per round.',
+			'3 points per €1 wagered on VIP Blackjack Lounge.',
+			'2 points per €1 wagered on other eligible tables.',
+			'Top 50 players share the prize pool.',
+			'Tournament runs from loading to end date inclusive.',
+		],
+		leaderboard: [
+			{
+				rank: 1,
+				playerName: 'AceHunter',
+				score: 84200,
+				prize: '€7,500',
+				avatar: 'AH',
+			},
+			{
+				rank: 2,
+				playerName: 'TableKing_X',
+				score: 72100,
+				prize: '€4,000',
+				avatar: 'TK',
+			},
+			{
+				rank: 3,
+				playerName: 'BlackjackPro',
+				score: 61500,
+				prize: '€2,500',
+				avatar: 'BP',
+			},
+			{
+				rank: 4,
+				playerName: 'RouletteStar',
+				score: 53300,
+				prize: '€2,000',
+				avatar: 'RS',
+			},
+			{
+				rank: 5,
+				playerName: 'CardShark_77',
+				score: 44800,
+				prize: '€1,500',
+				avatar: 'CS',
+			},
+		],
+	},
+	{
+		id: 'crash-cup',
+		title: 'Crash Cup April',
+		description:
+			'Cash out at the biggest multiplier. The highest average multiplier over 100 rounds wins. Skill meets timing.',
+		status: 'upcoming',
+		prizePool: '€15,000',
+		playerCount: 0,
+		maxPlayers: 3000,
+		startDate: '2026-04-01T00:00:00Z',
+		endDate: '2026-04-30T23:59:59Z',
+		games: ['crash-aviator', 'moon-blast', 'rocket-surge'],
+		gradient: 'linear-gradient(135deg, #4338ca 0%, #1e1b4b 100%)',
+		minBet: 1,
+		rules: [
+			'Score = average cash-out multiplier across your best 100 rounds.',
+			'Minimum 100 qualifying rounds required.',
+			'Minimum bet: €1 per round.',
+			'Standard multiplier caps apply per game.',
+			'Top 30 players share the prize pool.',
+		],
+		leaderboard: [],
+	},
+	{
+		id: 'jackpot-hunters-march',
+		title: 'Jackpot Hunters — March',
+		description:
+			'Trigger any jackpot feature during the tournament period to earn bonus points and climb the leaderboard.',
+		status: 'finished',
+		prizePool: '€30,000',
+		playerCount: 2218,
+		maxPlayers: 10000,
+		startDate: '2026-02-01T00:00:00Z',
+		endDate: '2026-02-28T23:59:59Z',
+		games: [
+			'mega-diamond-jackpot',
+			'golden-pot-jackpot',
+			'royal-flush-jackpot',
+		],
+		gradient: 'linear-gradient(135deg, #d97706 0%, #92400e 100%)',
+		rules: [
+			'Points for every €1 wagered on jackpot games.',
+			'Bonus 500 points each time any jackpot is triggered (non-winning also counts).',
+			'Top 100 players share the prize pool.',
+		],
+		leaderboard: [
+			{
+				rank: 1,
+				playerName: 'DiamondHand$',
+				score: 220400,
+				prize: '€8,000',
+				avatar: 'DH',
+			},
+			{
+				rank: 2,
+				playerName: 'JackpotJane',
+				score: 198700,
+				prize: '€5,000',
+				avatar: 'JJ',
+			},
+			{
+				rank: 3,
+				playerName: 'MegaWin_101',
+				score: 175200,
+				prize: '€3,500',
+				avatar: 'MW',
+			},
+		],
+	},
+]
+
+export function getTournamentById(id: string): Tournament | undefined {
+	return tournaments.find((t) => t.id === id)
+}
+
+export function getActiveTournaments(): Tournament[] {
+	return tournaments.filter((t) => t.status === 'active')
+}

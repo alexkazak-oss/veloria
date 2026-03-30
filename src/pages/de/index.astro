@@ -1,0 +1,46 @@
+---
+import type { Locale } from '../../i18n/index'
+import PageLayout from '../../layouts/PageLayout.astro'
+import { buildSEO } from '../../lib/seo'
+
+// Sections
+import CategoriesSection from '../../components/sections/CategoriesSection.astro'
+import FAQSection from '../../components/sections/FAQSection.astro'
+import FeaturesBar from '../../components/sections/FeaturesBar.astro'
+import GamesSection from '../../components/sections/GamesSection.astro'
+import HeroSection from '../../components/sections/HeroSection.astro'
+import LiveSection from '../../components/sections/LiveSection.astro'
+import PaymentSection from '../../components/sections/PaymentSection.astro'
+import PromotionsSection from '../../components/sections/PromotionsSection.astro'
+import ProvidersSection from '../../components/sections/ProvidersSection.astro'
+import ReferralSection from '../../components/sections/ReferralSection.astro'
+import TournamentsSection from '../../components/sections/TournamentsSection.astro'
+import TrustSection from '../../components/sections/TrustSection.astro'
+import VIPSection from '../../components/sections/VIPSection.astro'
+
+const locale = 'de' as Locale;
+
+const seo = buildSEO({
+  title       : 'Veloria Casino — Wo jedes Spiel legendär wird',
+  description : 'Spielen Sie über 500 Slots, Live-Casino, Jackpots und Crash-Spiele bei Veloria. Sichern Sie sich bis zu €5.000 + 200 Freispiele. Schnelle Auszahlungen, 24/7 Support.',
+  canonical   : 'https://veloria.casino/de/',
+  locale,
+  siteName    : 'Veloria Casino',
+});
+---
+
+<PageLayout {...seo} locale={locale} current="/de/">
+  <HeroSection        locale={locale} />
+  <FeaturesBar        locale={locale} />
+  <GamesSection       locale={locale} />
+  <LiveSection        locale={locale} />
+  <CategoriesSection  locale={locale} />
+  <ProvidersSection   locale={locale} />
+  <PromotionsSection  locale={locale} />
+  <VIPSection         locale={locale} />
+  <TournamentsSection locale={locale} />
+  <ReferralSection    locale={locale} />
+  <PaymentSection     locale={locale} />
+  <TrustSection       locale={locale} />
+  <FAQSection         locale={locale} />
+</PageLayout>

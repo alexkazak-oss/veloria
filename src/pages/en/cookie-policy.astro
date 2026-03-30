@@ -1,0 +1,65 @@
+---
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro'
+import type { Locale } from '../../i18n/index'
+import PageLayout from '../../layouts/PageLayout.astro'
+import { buildSEO } from '../../lib/seo'
+
+const locale = 'en' as Locale;
+const seo = buildSEO({
+  title      : 'Cookie Policy — Veloria Casino',
+  description: 'Learn how Veloria Casino uses cookies and how you can manage your cookie preferences.',
+  canonical  : 'https://veloria.casino/en/cookie-policy/',
+  locale,
+  siteName   : 'Veloria Casino',
+});
+
+const cookieTypes = [
+  { name: 'Essential', icon: '🔒', required: true,  desc: 'Required for the site to function. Cannot be disabled. Includes session management, security tokens, and cookie consent settings.' },
+  { name: 'Functional', icon: '⚙️', required: true, desc: 'Enable personalised features such as remembering your language preference and dark/light mode setting.' },
+  { name: 'Analytics', icon: '📊', required: false,  desc: 'Help us understand how visitors use the site through aggregated, anonymised data. We use a privacy-friendly analytics solution with no cross-site tracking.' },
+  { name: 'Marketing', icon: '📣', required: false,  desc: 'Used to show personalised offers and promotions. We do not share this data with third-party ad networks in this prototype.' },
+];
+---
+
+<PageLayout {...seo} locale={locale} current="/en/cookie-policy/">
+  <div class="container py-8 md:py-14 max-w-3xl">
+    <Breadcrumbs items={[{ label: 'Home', href: '/en/' }, { label: 'Cookie Policy', href: '/en/cookie-policy/' }]} locale={locale} />
+
+    <article class="mt-8">
+      <h1 class="text-headline text-[var(--color-text-primary)] mb-2">Cookie Policy</h1>
+      <p class="text-xs text-[var(--color-text-muted)] mb-8">Last updated: 1 January 2026 · Demo prototype only</p>
+
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-8">
+        Veloria Casino uses cookies and similar technologies to make the site work, improve your experience, and (with your consent) show you personalised content. This page explains what cookies we use, why, and how to manage them.
+      </p>
+
+      <h2 class="text-base font-bold text-[var(--color-text-primary)] mb-4">Cookie Types</h2>
+      <div class="space-y-4 mb-10">
+        {cookieTypes.map(({ name, icon, required, desc }) => (
+          <div class="card p-5">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-semibold text-[var(--color-text-primary)] flex items-center gap-2">
+                <span aria-hidden="true">{icon}</span>{name}
+              </h3>
+              <span class={`text-xs px-2 py-0.5 rounded-full ${required ? 'bg-[var(--color-primary-600)]22 text-[var(--color-primary-400)]' : 'bg-[var(--color-bg-elevated)] text-[var(--color-text-muted)]'}`}>
+                {required ? 'Required' : 'Optional'}
+              </span>
+            </div>
+            <p class="text-sm text-[var(--color-text-secondary)]">{desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <h2 class="text-base font-bold text-[var(--color-text-primary)] mb-4">Managing Your Preferences</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-4">
+        You can manage all optional cookies via the cookie banner shown on your first visit. You can also clear all cookies in your browser settings. Note that disabling essential cookies may affect site functionality.
+      </p>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-4">
+        Most browsers allow you to view, delete, and block cookies. Refer to your browser's help documentation for specific instructions.
+      </p>
+      <p class="text-xs text-[var(--color-text-muted)] mt-8">
+        This Cookie Policy is fictional and part of a UI demo prototype. No real cookies beyond technical necessities are used in this demo build.
+      </p>
+    </article>
+  </div>
+</PageLayout>

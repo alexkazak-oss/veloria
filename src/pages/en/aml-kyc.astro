@@ -1,0 +1,74 @@
+---
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro'
+import type { Locale } from '../../i18n/index'
+import PageLayout from '../../layouts/PageLayout.astro'
+import { buildSEO } from '../../lib/seo'
+
+const locale = 'en' as Locale;
+const seo = buildSEO({
+  title      : 'AML & KYC Policy — Veloria Casino',
+  description: 'Veloria Casino Anti-Money Laundering and Know Your Customer policy. Prototype document for UI demonstration.',
+  canonical  : 'https://veloria.casino/en/aml-kyc/',
+  locale,
+  siteName   : 'Veloria Casino',
+});
+---
+
+<PageLayout {...seo} locale={locale} current="/en/aml-kyc/">
+  <div class="container py-8 md:py-14 max-w-3xl">
+    <Breadcrumbs items={[{ label: 'Home', href: '/en/' }, { label: 'AML & KYC', href: '/en/aml-kyc/' }]} locale={locale} />
+
+    <article class="mt-8">
+      <h1 class="text-headline text-[var(--color-text-primary)] mb-2">AML & KYC Policy</h1>
+      <p class="text-xs text-[var(--color-text-muted)] mb-8">Last updated: 1 January 2026 · Demo prototype only</p>
+
+      <div class="space-y-8 text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        <section>
+          <h2 class="text-base font-bold text-[var(--color-text-primary)] mb-2">Our Commitment</h2>
+          <p>Veloria Casino is committed to preventing money laundering, terrorist financing, and all other financial crimes. We comply with all applicable Anti-Money Laundering (AML) regulations and implement robust Know Your Customer (KYC) procedures.</p>
+        </section>
+
+        <section>
+          <h2 class="text-base font-bold text-[var(--color-text-primary)] mb-2">KYC Verification Requirements</h2>
+          <p class="mb-3">All players are required to complete identity verification before withdrawing funds. Required documents include:</p>
+          <ul class="space-y-1.5">
+            {[
+              'Government-issued photo ID (passport, national ID, or driving licence)',
+              'Proof of address dated within 3 months (utility bill, bank statement)',
+              'Payment method verification (card photograph, e-wallet screenshot)',
+              'Enhanced due diligence may require additional documentation for high-value transactions',
+            ].map((doc) => (
+              <li class="flex gap-2">
+                <span class="text-[var(--color-primary-400)]" aria-hidden="true">→</span>{doc}
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-base font-bold text-[var(--color-text-primary)] mb-2">Transaction Monitoring</h2>
+          <p>All transactions are subject to automated monitoring for suspicious patterns including structuring, rapid deposits and withdrawals, and activity inconsistent with declared source of funds. Suspicious activity is reported to relevant authorities as required by law.</p>
+        </section>
+
+        <section>
+          <h2 class="text-base font-bold text-[var(--color-text-primary)] mb-2">Source of Funds</h2>
+          <p>Players depositing cumulative amounts exceeding €10,000 within a 30-day period may be asked to provide evidence of source of funds. Acceptable evidence includes payslips, tax returns, business ownership documentation, or investment statements.</p>
+        </section>
+
+        <section>
+          <h2 class="text-base font-bold text-[var(--color-text-primary)] mb-2">PEP & Sanctions Screening</h2>
+          <p>All customers are screened against Politically Exposed Persons (PEP) lists and international sanctions databases at registration and on an ongoing basis. PEP status triggers enhanced due diligence procedures.</p>
+        </section>
+
+        <section>
+          <h2 class="text-base font-bold text-[var(--color-text-primary)] mb-2">Account Suspension</h2>
+          <p>Accounts suspected of money laundering or terrorist financing will be suspended immediately pending investigation. Funds in suspended accounts are held in accordance with legal requirements and may be subject to law enforcement actions.</p>
+        </section>
+      </div>
+
+      <div class="mt-10 p-4 rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-surface)]" role="note">
+        <p class="text-xs text-[var(--color-text-muted)]">This AML & KYC Policy is fictional and part of a UI demo prototype. No real compliance obligations exist for this demonstration project.</p>
+      </div>
+    </article>
+  </div>
+</PageLayout>

@@ -1,0 +1,26 @@
+---
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro'
+import type { Locale } from '../../i18n/index'
+import PageLayout from '../../layouts/PageLayout.astro'
+import { buildSEO } from '../../lib/seo'
+const locale = 'de' as Locale;
+const seo = buildSEO({ title: 'Über uns — Veloria Casino', description: 'Erfahre mehr über Veloria Casino — unsere Mission, Werte und das Team hinter der Demo-Plattform.', canonical: 'https://veloria.casino/de/about/', locale, siteName: 'Veloria Casino' });
+---
+<PageLayout {...seo} locale={locale} current="/de/about/">
+  <div class="container py-8 md:py-14 max-w-3xl">
+    <Breadcrumbs items={[{ label: 'Home', href: '/de/' }, { label: 'Über uns', href: '/de/about/' }]} locale={locale} />
+    <article class="mt-8">
+      <h1 class="text-headline text-[var(--color-text-primary)] mb-6">Über Veloria</h1>
+      <p class="text-[var(--color-text-secondary)] leading-relaxed mb-6"><strong class="text-[var(--color-text-primary)]">Veloria</strong> ist ein Premium-UI/UX-Prototyp für eine moderne iGaming-Plattform. Es handelt sich nicht um ein echtes Casino. Alle Spiele, Aktionen und Funktionen dienen ausschließlich Demonstrationszwecken.</p>
+      <h2 class="text-xl font-bold text-[var(--color-text-primary)] mt-10 mb-4">Unsere Mission</h2>
+      <p class="text-[var(--color-text-secondary)] leading-relaxed mb-6">Wir zeigen, dass verantwortungsvolle und gut gestaltete digitale Unterhaltung möglich ist. Jedes Element auf Veloria ist auf das Spielerlebnis ausgerichtet — klare Informationen, schnelle Navigation und ehrliche Kommunikation.</p>
+      <h2 class="text-xl font-bold text-[var(--color-text-primary)] mt-10 mb-4">Unsere Werte</h2>
+      <ul class="space-y-3 mb-6">
+        {[['Transparenz', 'Wir kommunizieren klar, was ein Bonus ist und welche Bedingungen gelten.'], ['Verantwortung', 'Verantwortungsvolles Spielen ist bei uns niemals versteckt.'], ['Sicherheit', 'Alle Verbindungen sind verschlüsselt.'], ['Inklusion', 'Unsere Plattform ist auf Englisch und Deutsch verfügbar.']].map(([t, d]) => (
+          <li class="flex gap-3"><span class="text-[var(--color-primary-400)] font-bold flex-shrink-0">✓</span><div><strong class="text-[var(--color-text-primary)]">{t}</strong><p class="text-sm text-[var(--color-text-secondary)]">{d}</p></div></li>
+        ))}
+      </ul>
+      <div class="rounded-[var(--radius-xl)] p-5 mt-10 border border-[var(--color-border)] bg-[var(--color-bg-surface)]" role="note"><p class="text-sm text-[var(--color-text-muted)]">Veloria Casino ist ein Design-Prototyp zu Demonstrationszwecken. Kein echtes Geld oder echtes Glücksspiel ist involviert. 18+.</p></div>
+    </article>
+  </div>
+</PageLayout>

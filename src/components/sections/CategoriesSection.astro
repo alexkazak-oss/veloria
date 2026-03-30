@@ -1,0 +1,46 @@
+---
+import type { Locale } from '../../i18n/index';
+import { useTranslations } from '../../i18n/index';
+import { gameCategories } from '../../data/games';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section class="section bg-[var(--color-bg-base)]" aria-labelledby="categories-title">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <span class="section-label">{t.sections.categories}</span>
+        <h2 id="categories-title" class="text-headline text-[var(--color-text-primary)]">Game Categories</h2>
+      </div>
+    </div>
+
+    <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4" role="list">
+      {gameCategories.map((cat) => (
+        <li>
+          <a
+            href={`/${locale}/games/${cat.id}`}
+            class="card neon-border group flex flex-col items-center gap-4 p-6 text-center h-full"
+            aria-label={`Browse ${cat.label} games`}
+          >
+            <div
+              class="w-16 h-16 rounded-[var(--radius-2xl)] flex items-center justify-center text-3xl"
+              style={`background: ${cat.gradient};`}
+              aria-hidden="true"
+            >
+              {cat.icon}
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-[var(--color-text-primary)] group-hover:text-[var(--color-primary-400)] transition-colors">
+                {cat.label}
+              </h3>
+              <p class="text-xs text-[var(--color-text-muted)] mt-1 line-clamp-2">{cat.description}</p>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

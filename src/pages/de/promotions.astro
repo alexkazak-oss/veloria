@@ -1,0 +1,49 @@
+---
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro'
+import { PromoCard } from '../../components/widgets/PromoCard'
+import { promotions } from '../../data/promotions'
+import type { Locale } from '../../i18n/index'
+import { useTranslations } from '../../i18n/index'
+import PageLayout from '../../layouts/PageLayout.astro'
+import { buildSEO } from '../../lib/seo'
+
+const locale = 'de' as Locale;
+const t      = useTranslations(locale);
+
+const seo = buildSEO({
+  title       : 'Aktionen & Boni — Veloria Casino',
+  description : 'Sichere dir exklusive Casino-Boni bei Veloria — Willkommenspaket, Nachladeboni, wöchentliches Cashback, Freispiele, VIP-Prämien und mehr.',
+  canonical   : 'https://veloria.casino/de/promotions/',
+  locale,
+  siteName    : 'Veloria Casino',
+});
+---
+
+<PageLayout {...seo} locale={locale} current="/de/promotions/">
+  <div class="container py-8 md:py-12">
+    <Breadcrumbs
+      items={[
+        { label: 'Home',    href: '/de/' },
+        { label: 'Aktionen', href: '/de/promotions/' },
+      ]}
+      locale={locale}
+    />
+
+    <div class="mt-6 mb-8">
+      <h1 class="text-headline text-[var(--color-text-primary)] mb-2">{t.nav.promotions}</h1>
+      <p class="text-[var(--color-text-secondary)]">
+        Exklusive Angebote für jeden Spieler — von Willkommensboni bis hin zu VIP-Prämien.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {promotions.map((promo) => (
+        <PromoCard promo={promo} client:idle />
+      ))}
+    </div>
+
+    <p class="mt-10 text-xs text-[var(--color-text-muted)] text-center max-w-2xl mx-auto leading-relaxed">
+      Alle Boni dienen ausschließlich Demonstrationszwecken. Umsatzbedingungen, Mindesteinzahlungen und Ablaufdaten sind fiktiv und Teil dieses Prototyp-UI. Verantwortungsvoll spielen. Nur 18+.
+    </p>
+  </div>
+</PageLayout>

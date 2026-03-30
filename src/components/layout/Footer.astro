@@ -1,0 +1,143 @@
+---
+import type { Locale } from '../../i18n/index';
+import { useTranslations } from '../../i18n/index';
+import { getFooterLinks } from '../../data/navigation';
+import { paymentMethods } from '../../data/paymentMethods';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t     = useTranslations(locale);
+const links = getFooterLinks(locale);
+---
+
+<footer class="bg-[var(--color-bg-surface)] border-t border-[var(--color-border)] mt-auto">
+  <!-- Main footer -->
+  <div class="container py-14">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+
+      <!-- Brand column -->
+      <div class="lg:col-span-2">
+        <a href={`/${locale}/`} class="flex items-center gap-2.5 mb-4" aria-label="Veloria Home">
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <rect width="32" height="32" rx="8" fill="url(#footer-logo-grad)" />
+            <path d="M8 9h4l4 10 4-10h4L16 24 8 9z" fill="white" />
+            <defs>
+              <linearGradient id="footer-logo-grad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#7c3aed" />
+                <stop offset="1" stop-color="#4c1d95" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <span class="font-bold text-base text-[var(--color-text-primary)]">
+            Ve<span class="text-[var(--color-primary-400)]">loria</span>
+          </span>
+        </a>
+        <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-4">
+          {t.footer.tagline}
+        </p>
+        <!-- Demo badge -->
+        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[var(--color-bg-elevated)] border border-[var(--color-border)] rounded-[var(--radius-full)] text-xs text-[var(--color-primary-400)] font-medium">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><circle cx="5" cy="5" r="4"/></svg>
+          {t.common.demoNote}
+        </span>
+      </div>
+
+      <!-- Casino links -->
+      <div>
+        <h3 class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)] mb-4">Casino</h3>
+        <ul class="flex flex-col gap-2.5">
+          {links.casino.map((link) => (
+            <li>
+              <a href={link.href} class="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors duration-[var(--transition-fast)]">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Support links -->
+      <div>
+        <h3 class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)] mb-4">Support</h3>
+        <ul class="flex flex-col gap-2.5">
+          {links.support.map((link) => (
+            <li>
+              <a href={link.href} class="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors duration-[var(--transition-fast)]">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <h3 class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)] mb-4 mt-8">Legal</h3>
+        <ul class="flex flex-col gap-2.5">
+          {links.legal.map((link) => (
+            <li>
+              <a href={link.href} class="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors duration-[var(--transition-fast)]">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Promotions -->
+      <div>
+        <h3 class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)] mb-4">Promotions</h3>
+        <ul class="flex flex-col gap-2.5">
+          {links.promotions.map((link) => (
+            <li>
+              <a href={link.href} class="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors duration-[var(--transition-fast)]">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Payment methods -->
+    <div class="mt-12 pt-8 border-t border-[var(--color-border)]">
+      <p class="text-xs text-[var(--color-text-muted)] mb-4 uppercase tracking-widest font-semibold">
+        {t.sections.payments}
+      </p>
+      <div class="flex flex-wrap gap-2">
+        {paymentMethods.map((pm) => (
+          <span
+            class="inline-flex items-center justify-center h-9 px-3 min-w-14 bg-[var(--color-bg-elevated)] border border-[var(--color-border)] rounded-[var(--radius-lg)] text-xs font-bold text-[var(--color-text-secondary)]"
+            title={pm.name}
+          >
+            {pm.logo}
+          </span>
+        ))}
+      </div>
+    </div>
+
+    <!-- Trust badges -->
+    <div class="mt-8 flex flex-wrap gap-4 items-center">
+      {[
+        { icon: '🔒', label: '256-bit SSL' },
+        { icon: '✓',  label: 'Demo Licensed' },
+        { icon: '18+',label: '18+ Only' },
+        { icon: '⚖️', label: 'Responsible Gaming' },
+      ].map((badge) => (
+        <span class="flex items-center gap-1.5 text-xs text-[var(--color-text-muted)]">
+          <span class="text-sm">{badge.icon}</span>
+          {badge.label}
+        </span>
+      ))}
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="border-t border-[var(--color-border)]">
+    <div class="container py-5">
+      <p class="text-xs text-[var(--color-text-muted)] leading-relaxed max-w-3xl mb-3">
+        {t.footer.disclaimer}
+      </p>
+      <p class="text-xs text-[var(--color-text-muted)]">{t.footer.rights}</p>
+    </div>
+  </div>
+</footer>

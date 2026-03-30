@@ -1,0 +1,78 @@
+---
+import { vipLevels } from '../../data/vipLevels'
+import type { Locale } from '../../i18n/index'
+import { useTranslations } from '../../i18n/index'
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t          = useTranslations(locale);
+const previewLevels = vipLevels.slice(0, 4);
+---
+
+<section
+  class="section"
+  aria-labelledby="vip-title"
+  style="background: linear-gradient(180deg, var(--color-bg-base) 0%, var(--color-bg-surface) 100%);"
+>
+  <div class="container">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+      <!-- Copy -->
+      <div>
+        <span class="section-label">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" class="inline mr-1" aria-hidden="true"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9,11 6,9.5 3,11 3.5,7.5 1,5 4.5,4.5"/></svg>
+          {t.sections.vipClub}
+        </span>
+        <h2 id="vip-title" class="text-headline text-[var(--color-text-primary)] mb-4">
+          {t.vip.headline}
+        </h2>
+        <p class="text-[var(--color-text-secondary)] leading-relaxed mb-8 max-w-md">
+          {t.vip.subline}
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a
+            href={`/${locale}/vip`}
+            class="inline-flex items-center justify-center px-7 py-3.5 rounded-[var(--radius-xl)] text-sm font-bold text-[var(--color-text-inverse)]"
+            style="background: linear-gradient(135deg, var(--color-gold-500), var(--color-gold-600)); box-shadow: var(--shadow-glow-gold);"
+          >
+            {t.vip.cta}
+          </a>
+          <a
+            href={`/${locale}/vip`}
+            class="inline-flex items-center justify-center px-7 py-3.5 rounded-[var(--radius-xl)] text-sm font-medium text-[var(--color-text-secondary)] border border-[var(--color-border)] hover:text-[var(--color-text-primary)] transition-colors"
+          >
+            {t.sections.learnMore}
+          </a>
+        </div>
+      </div>
+
+      <!-- VIP level cards -->
+      <div class="grid grid-cols-2 gap-3">
+        {previewLevels.map((level) => (
+          <div
+            class="card p-4 flex flex-col gap-2"
+            style={`border: 1px solid ${level.color}33;`}
+            aria-label={`${level.name} VIP tier`}
+          >
+            <div class="flex items-center justify-between">
+              <span class="text-xl" aria-hidden="true">{level.icon}</span>
+              <span
+                class="text-xs font-bold px-2 py-0.5 rounded-full"
+                style={`background: ${level.color}22; color: ${level.color};`}
+              >
+                {level.name}
+              </span>
+            </div>
+            <p class="text-sm text-[var(--color-text-secondary)]">
+              <strong style={`color: ${level.color};`}>{level.cashbackRate}%</strong> cashback
+            </p>
+            <p class="text-xs text-[var(--color-text-muted)]">
+              {level.personalManager ? '👤 Personal manager' : `Up to €${(level.withdrawLimit / 1000).toFixed(0)}k/week`}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,127 @@
+---
+import type { GetStaticPaths } from 'astro'
+import Breadcrumbs from '../../../components/layout/Breadcrumbs.astro'
+import FAQAccordion from '../../../components/widgets/FAQAccordion'
+import { GameCard } from '../../../components/widgets/GameCard'
+import { getGamesByProvider } from '../../../data/games'
+import { providers } from '../../../data/providers'
+import type { Locale } from '../../../i18n/index'
+import PageLayout from '../../../layouts/PageLayout.astro'
+import { buildBreadcrumbJsonLd, buildSEO } from '../../../lib/seo'
+
+export const getStaticPaths = (() => {
+  return providers.map((p) => ({
+    params: { slug: p.slug },
+    props:  { provider: p },
+  }));
+}) satisfies GetStaticPaths;
+
+const locale      = 'en' as Locale;
+const { provider } = Astro.props;
+const pgames      = getGamesByProvider(provider.slug);
+
+const seo = buildSEO({
+  title       : `${provider.name} Games — Veloria Casino`,
+  description : provider.description,
+  canonical   : `https://veloria.casino/en/providers/${provider.slug}/`,
+  locale,
+  siteName    : 'Veloria Casino',
+});
+
+const breadcrumbLd = buildBreadcrumbJsonLd(
+  [
+    { label: 'Home',         url: 'https://veloria.casino/en/' },
+    { label: 'Providers',    url: 'https://veloria.casino/en/providers/' },
+    { label: provider.name,  url: `https://veloria.casino/en/providers/${provider.slug}/` },
+  ],
+);
+
+const providerFAQ = [
+  { id: `${provider.slug}-1`, question: `Is ${provider.name} licensed?`, answer: `Yes, ${provider.name} is independently certified and holds RNG approval from recognised testing labs. All games are audited regularly for fairness.`, category: 'account' as const },
+  { id: `${provider.slug}-2`, question: `What categories does ${provider.name} cover?`, answer: `${provider.name} covers ${provider.categories.join(', ')} — a total of ${provider.gameCount} titles available on BRAND.`, category: 'account' as const },
+  { id: `${provider.slug}-3`, question: `Are ${provider.name} games available on mobile?`, answer: `All ${provider.name} games are built in HTML5 and fully optimised for iOS and Android, including tablets.`, category: 'account' as const },
+];
+---
+
+<PageLayout {...seo} locale={locale} current={`/en/providers/${provider.slug}/`}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+  </Fragment>
+
+  <!-- Provider hero -->
+  <header
+    class="relative py-14 md:py-20"
+    style="background: linear-gradient(135deg, var(--color-bg-surface), var(--color-bg-elevated));"
+    aria-label={`${provider.name} provider page`}
+  >
+    <div class="container">
+      <Breadcrumbs
+        items={[
+          { label: 'Home',        href: '/en/' },
+          { label: 'Providers',   href: '/en/providers/' },
+          { label: provider.name, href: `/en/providers/${provider.slug}/` },
+        ]}
+        locale={locale}
+      />
+
+      <div class="mt-6 flex items-start gap-6">
+        <!-- Logo placeholder -->
+        <div
+          class="w-20 h-20 flex-shrink-0 rounded-[var(--radius-2xl)] flex items-center justify-center text-2xl font-black"
+          style="background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-800)); color: var(--color-text-primary);"
+          aria-hidden="true"
+        >
+          {provider.logo}
+        </div>
+        <div>
+          <h1 class="text-headline text-[var(--color-text-primary)] mb-2">{provider.name}</h1>
+          <p class="text-[var(--color-text-secondary)] max-w-2xl leading-relaxed">{provider.longDescription}</p>
+
+          <!-- Meta pills -->
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="text-xs px-3 py-1 rounded-full bg-[var(--color-bg-surface)] border border-[var(--color-border)] text-[var(--color-text-muted)]">
+              Founded {provider.founded}
+            </span>
+            <span class="text-xs px-3 py-1 rounded-full bg-[var(--color-bg-surface)] border border-[var(--color-border)] text-[var(--color-text-muted)]">
+              📍 {provider.headquarters}
+            </span>
+            <span class="text-xs px-3 py-1 rounded-full bg-[var(--color-bg-surface)] border border-[var(--color-border)] text-[var(--color-text-muted)]">
+              🎮 {provider.gameCount} games
+            </span>
+            {provider.features.map((f) => (
+              <span class="text-xs px-3 py-1 rounded-full bg-[var(--color-primary-600)]22 border border-[var(--color-primary-600)]44 text-[var(--color-primary-400)]">
+                {f}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container py-10 space-y-14">
+    <!-- Games grid -->
+    <section aria-label={`${provider.name} games`}>
+      <h2 class="text-xl font-bold text-[var(--color-text-primary)] mb-5">
+        {pgames.length} {provider.name} Games
+      </h2>
+      {pgames.length > 0 ? (
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+          {pgames.map((game) => (
+            <GameCard game={game} locale={locale} client:idle />
+          ))}
+        </div>
+      ) : (
+        <p class="text-[var(--color-text-muted)]">No games listed for this provider yet.</p>
+      )}
+    </section>
+
+    <!-- FAQ -->
+    <section aria-label={`FAQ about ${provider.name}`}>
+      <h2 class="text-xl font-bold text-[var(--color-text-primary)] mb-5">
+        Frequently Asked About {provider.name}
+      </h2>
+      <FAQAccordion items={providerFAQ} client:idle />
+    </section>
+  </div>
+</PageLayout>

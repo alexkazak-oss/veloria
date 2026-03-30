@@ -1,0 +1,53 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { buildSEO } from '../../lib/seo';
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro';
+import type { Locale } from '../../i18n/index';
+const locale = 'de' as Locale;
+const seo = buildSEO({ title: 'Kontakt — Veloria Casino', description: 'Kontaktiere das Veloria-Supportteam — 24/7 per Live-Chat und E-Mail.', canonical: 'https://BRAND.casino/de/contacts/', locale, siteName: 'Veloria Casino' });
+---
+<PageLayout {...seo} locale={locale} current="/de/contacts/">
+  <div class="container py-8 md:py-14 max-w-4xl">
+    <Breadcrumbs items={[{ label: 'Home', href: '/de/' }, { label: 'Kontakt', href: '/de/contacts/' }]} locale={locale} />
+    <div class="mt-8 mb-10">
+      <h1 class="text-headline text-[var(--color-text-primary)] mb-3">Kontakt</h1>
+      <p class="text-[var(--color-text-secondary)]">Unser Support-Team ist rund um die Uhr für dich da.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-14">
+      {[
+        { icon: '💬', title: 'Live-Chat',     desc: 'Chatte in Echtzeit. Durchschnittliche Antwortzeit: unter 2 Minuten.', action: 'Chat starten', avail: '24/7' },
+        { icon: '📧', title: 'E-Mail-Support', desc: 'Schreibe an support@veloria.casino. Antwort in durchschnittlich 2 Stunden.', action: 'E-Mail senden', avail: 'Antwort in 2h' },
+        { icon: '❓', title: 'Hilfe-Center',  desc: 'Durchsuche 24 Hilfeartikel in 5 Kategorien.', action: 'FAQ durchsuchen', avail: 'Self-Service', href: '/de/help/' },
+      ].map(({ icon, title, desc, action, avail, href }) => (
+        <div class="card p-6 flex flex-col">
+          <span class="text-4xl mb-4" aria-hidden="true">{icon}</span>
+          <h2 class="font-bold text-[var(--color-text-primary)] mb-1">{title}</h2>
+          <p class="text-xs text-[var(--color-primary-400)] mb-3">{avail}</p>
+          <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed flex-1 mb-4">{desc}</p>
+          <a href={href ?? '#'} class="inline-flex items-center justify-center px-5 py-2 rounded-[var(--radius-xl)] text-sm font-medium border border-[var(--color-primary-500)] text-[var(--color-primary-400)] hover:bg-[var(--color-primary-600)]22 transition-colors">{action}</a>
+        </div>
+      ))}
+    </div>
+    <div class="max-w-lg mx-auto">
+      <h2 class="text-xl font-bold text-[var(--color-text-primary)] mb-6 text-center">Nachricht senden</h2>
+      <form class="space-y-4" aria-label="Kontaktformular (nur Demo)" onsubmit="event.preventDefault(); alert('Demo-Formular — nicht mit einem Backend verbunden.');">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-[var(--color-text-secondary)] mb-1.5" for="de-contact-name">Name</label>
+            <input id="de-contact-name" type="text" autocomplete="name" placeholder="Dein Name" class="w-full px-4 py-2.5 text-sm rounded-[var(--radius-xl)] bg-[var(--color-bg-surface)] border border-[var(--color-border)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-primary-500)] transition-colors" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-[var(--color-text-secondary)] mb-1.5" for="de-contact-email">E-Mail</label>
+            <input id="de-contact-email" type="email" autocomplete="email" placeholder="du@beispiel.de" class="w-full px-4 py-2.5 text-sm rounded-[var(--radius-xl)] bg-[var(--color-bg-surface)] border border-[var(--color-border)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-primary-500)] transition-colors" />
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-[var(--color-text-secondary)] mb-1.5" for="de-contact-message">Nachricht</label>
+          <textarea id="de-contact-message" rows="5" placeholder="Beschreibe dein Anliegen…" class="w-full px-4 py-2.5 text-sm rounded-[var(--radius-xl)] bg-[var(--color-bg-surface)] border border-[var(--color-border)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-primary-500)] transition-colors resize-none"></textarea>
+        </div>
+        <button type="submit" class="w-full py-3 rounded-[var(--radius-xl)] text-sm font-bold text-[var(--color-text-primary)]" style="background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-700)); box-shadow: var(--shadow-glow-primary);">Nachricht senden</button>
+        <p class="text-xs text-[var(--color-text-muted)] text-center">Demo-Formular — nicht mit einem Backend verbunden.</p>
+      </form>
+    </div>
+  </div>
+</PageLayout>

@@ -1,0 +1,28 @@
+---
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro'
+import type { Locale } from '../../i18n/index'
+import PageLayout from '../../layouts/PageLayout.astro'
+import { buildSEO } from '../../lib/seo'
+const locale = 'de' as Locale;
+const seo = buildSEO({ title: 'Datenschutz — Veloria Casino', description: 'Datenschutzerklärung von Veloria Casino. Demo-Dokument für Prototypzwecke.', canonical: 'https://veloria.casino/de/privacy/', locale, siteName: 'Veloria Casino' });
+---
+<PageLayout {...seo} locale={locale} current="/de/privacy/">
+  <div class="container py-8 md:py-14 max-w-3xl">
+    <Breadcrumbs items={[{ label: 'Home', href: '/de/' }, { label: 'Datenschutz', href: '/de/privacy/' }]} locale={locale} />
+    <article class="mt-8">
+      <h1 class="text-headline text-[var(--color-text-primary)] mb-2">Datenschutzerklärung</h1>
+      <p class="text-xs text-[var(--color-text-muted)] mb-8">Zuletzt aktualisiert: 1. Januar 2026 · Nur Demo-Prototyp</p>
+      <div class="space-y-6 text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        <section><h2 class="text-base font-bold text-[var(--color-text-primary)] mb-2">1. Verantwortliche Stelle</h2><p>Veloria Entertainment Ltd (hypothetisch), Malta. Kontakt: datenschutz@veloria.casino (Demo-Adresse).</p></section>
+        <section><h2 class="text-base font-bold text-[var(--color-text-primary)] mb-2">2. Erhobene Daten</h2><p>Name, E-Mail, Geburtsdatum, IP-Adresse, Browser-Informationen, Spielverlauf und Transaktionsdaten.</p></section>
+        <section><h2 class="text-base font-bold text-[var(--color-text-primary)] mb-2">3. Rechtsgrundlagen</h2><p>Vertragserfüllung, rechtliche Verpflichtung (AML/KYC), berechtigtes Interesse und Einwilligung für Marketing.</p></section>
+        <section><h2 class="text-base font-bold text-[var(--color-text-primary)] mb-2">4. Datenweitergabe</h2><p>Keine Weitergabe an Dritte zu kommerziellen Zwecken. Weitergabe nur an Zahlungsanbieter und Aufsichtsbehörden.</p></section>
+        <section><h2 class="text-base font-bold text-[var(--color-text-primary)] mb-2">5. Deine Rechte</h2><p>Recht auf Auskunft, Berichtigung, Löschung, Datenportabilität und Widerspruch. Anfragen an datenschutz@veloria.casino.</p></section>
+        <section><h2 class="text-base font-bold text-[var(--color-text-primary)] mb-2">6. Sicherheit</h2><p>Alle Daten im Transit sind durch 256-Bit-TLS verschlüsselt. Daten im Ruhezustand werden durch AES-256 geschützt.</p></section>
+      </div>
+      <div class="mt-10 p-4 rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-surface)]" role="note">
+        <p class="text-xs text-[var(--color-text-muted)]">Diese Datenschutzerklärung ist fiktiv und Teil eines UI-Demo-Prototyps. Es werden keine echten Daten erhoben.</p>
+      </div>
+    </article>
+  </div>
+</PageLayout>

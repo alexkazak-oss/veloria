@@ -1,0 +1,64 @@
+---
+import type { Locale } from '../../i18n/index';
+import { useTranslations } from '../../i18n/index';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const features = [
+  {
+    key:     'secure',
+    emoji:   '🔒',
+    label:   t.features.secure,
+    sublabel: t.features.secureSub,
+    color:   'var(--color-primary-400)',
+  },
+  {
+    key:     'fast',
+    emoji:   '⚡',
+    label:   t.features.fast,
+    sublabel: t.features.fastSub,
+    color:   'var(--color-gold-400)',
+  },
+  {
+    key:     'crypto',
+    emoji:   '₿',
+    label:   t.features.crypto,
+    sublabel: t.features.cryptoSub,
+    color:   'var(--color-cyan-400)',
+  },
+  {
+    key:     'support',
+    emoji:   '💬',
+    label:   t.features.support,
+    sublabel: t.features.supportSub,
+    color:   'var(--color-success)',
+  },
+];
+---
+
+<section
+  aria-label="Platform features"
+  class="bg-[var(--color-bg-surface)] border-y border-[var(--color-border)]"
+>
+  <div class="container section-sm">
+    <ul class="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8" role="list">
+      {features.map((f) => (
+        <li class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <span
+            class="flex items-center justify-center w-12 h-12 rounded-[var(--radius-xl)] text-xl shrink-0"
+            style={`background: rgba(var(--tw-rgb-bg-elevated, 22, 30, 53), 1); border: 1px solid var(--color-border);`}
+            aria-hidden="true"
+          >
+            {f.emoji}
+          </span>
+          <div>
+            <p class="text-sm font-semibold text-[var(--color-text-primary)]">{f.label}</p>
+            <p class="text-xs text-[var(--color-text-muted)] mt-0.5 leading-snug">{f.sublabel}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

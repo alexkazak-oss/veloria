@@ -1,0 +1,56 @@
+---
+import RegisterForm from '../../components/auth/RegisterForm'
+import type { Locale } from '../../i18n/index'
+import PageLayout from '../../layouts/PageLayout.astro'
+import { buildSEO } from '../../lib/seo'
+
+const locale = 'de' as Locale
+
+const seo = buildSEO({
+  title       : 'Konto erstellen — Veloria Casino',
+  description : 'Registriere dich bei Veloria Casino und sichere dir bis zu €5.000 + 200 Freispiele.',
+  canonical   : 'https://veloria.casino/de/register/',
+  locale,
+  noIndex     : true,
+  siteName    : 'Veloria Casino',
+})
+
+const rawNext = Astro.url.searchParams.get('next')
+const redirectTo =
+  rawNext && rawNext.startsWith('/') && !rawNext.startsWith('//')
+    ? rawNext
+    : `/${locale}/`
+---
+
+<PageLayout {...seo} locale={locale} current="/de/register/">
+  <div class="container flex items-center justify-center min-h-[calc(100dvh-12rem)] py-12 px-4">
+    <div class="w-full max-w-md">
+
+      <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-surface)] p-8 shadow-2xl">
+
+        <div class="mb-8 text-center">
+          <a href={`/${locale}/`} class="inline-flex items-center gap-2 mb-6" aria-label="Veloria Home">
+            <svg width="36" height="36" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <rect width="32" height="32" rx="8" fill="url(#register-logo-de)" />
+              <path d="M8 9h4l4 10 4-10h4L16 24 8 9z" fill="white" />
+              <defs>
+                <linearGradient id="register-logo-de" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#7c3aed" />
+                  <stop offset="1" stop-color="#4c1d95" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <span class="font-bold text-xl text-[var(--color-text-primary)]">Veloria</span>
+          </a>
+          <h1 class="text-2xl font-bold text-[var(--color-text-primary)]">Konto erstellen</h1>
+          <p class="mt-1.5 text-sm text-[var(--color-text-muted)]">
+            Tritt Veloria bei und sichere deinen <span class="font-semibold text-[var(--color-primary-400)]">Willkommensbonus</span>
+          </p>
+        </div>
+
+        <RegisterForm locale={locale} redirectTo={redirectTo} client:load />
+
+      </div>
+    </div>
+  </div>
+</PageLayout>

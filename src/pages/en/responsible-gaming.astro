@@ -1,0 +1,85 @@
+---
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro'
+import type { Locale } from '../../i18n/index'
+import PageLayout from '../../layouts/PageLayout.astro'
+import { buildSEO } from '../../lib/seo'
+
+const locale = 'en' as Locale;
+const seo = buildSEO({
+  title       : 'Responsible Gaming — Veloria Casino',
+  description : 'Veloria is committed to responsible gaming. Learn about deposit limits, self-exclusion, reality checks, and support resources.',
+  canonical   : 'https://veloria.casino/en/responsible-gaming/',
+  locale,
+  siteName    : 'Veloria Casino',
+});
+
+const tools = [
+  { icon: '💰', title: 'Deposit Limits',  desc: 'Set daily, weekly, or monthly deposit limits to stay in control of your spending. Changes to lower limits take effect immediately.' },
+  { icon: '⏱️', title: 'Session Limits',  desc: 'Define how long you can play in a single session. A reality check notification will appear at your chosen intervals.' },
+  { icon: '🚫', title: 'Self-Exclusion',  desc: 'Take a break for 24 hours, 7 days, 30 days or permanently. During exclusion, you cannot access your account or create a new one.' },
+  { icon: '🔍', title: 'Reality Check',   desc: 'Receive periodic reminders showing how long you have been playing and how much you have wagered in the current session.' },
+  { icon: '🛑', title: 'Loss Limits',     desc: 'Set a cap on how much you can lose within a given time frame. The system will lock play when the limit is reached.' },
+  { icon: '🤝', title: 'Support Links',   desc: 'Direct links to GamCare, Gamblers Anonymous, BeGambleAware and other international helplines are always visible in the footer.' },
+];
+---
+
+<PageLayout {...seo} locale={locale} current="/en/responsible-gaming/">
+  <div class="container py-8 md:py-14 max-w-3xl">
+    <Breadcrumbs items={[{ label: 'Home', href: '/en/' }, { label: 'Responsible Gaming', href: '/en/responsible-gaming/' }]} locale={locale} />
+
+    <article class="mt-8">
+      <h1 class="text-headline text-[var(--color-text-primary)] mb-4">Responsible Gaming</h1>
+      <p class="text-[var(--color-text-secondary)] leading-relaxed mb-10">
+        At Veloria, player wellbeing comes before everything else. The tools and resources below are available to every player at no cost and without judgement. If gambling is no longer fun, please use them.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+        {tools.map(({ icon, title, desc }) => (
+          <div class="card p-5">
+            <span class="text-3xl mb-3 block" aria-hidden="true">{icon}</span>
+            <h2 class="font-bold text-[var(--color-text-primary)] mb-2">{title}</h2>
+            <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">{desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <h2 class="text-xl font-bold text-[var(--color-text-primary)] mb-4">Warning Signs</h2>
+      <p class="text-[var(--color-text-secondary)] leading-relaxed mb-4">
+        Problem gambling can affect anyone. Common warning signs include:
+      </p>
+      <ul class="space-y-2 mb-8">
+        {[
+          'Spending more money or time on gambling than intended',
+          'Gambling to escape problems or relieve feelings of helplessness',
+          'Lying to family or friends about gambling activity',
+          'Chasing losses — trying to win back money you have lost',
+          'Neglecting work, family or personal responsibilities to gamble',
+        ].map((sign) => (
+          <li class="flex gap-2 text-sm text-[var(--color-text-secondary)]">
+            <span class="text-[var(--color-gold-500)]" aria-hidden="true">⚠</span> {sign}
+          </li>
+        ))}
+      </ul>
+
+      <h2 class="text-xl font-bold text-[var(--color-text-primary)] mb-4">External Support</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {[
+          ['GamCare', 'gamcare.org.uk', 'UK-based gambling support'],
+          ['BeGambleAware', 'begambleaware.org', 'Advice and support'],
+          ['Gamblers Anonymous', 'gamblersanonymous.org', 'Peer support network'],
+          ['Gordon Moody', 'gordonmoody.org.uk', 'Residential treatment'],
+        ].map(([name, url, desc]) => (
+          <div class="card p-4">
+            <p class="font-medium text-[var(--color-text-primary)]">{name}</p>
+            <p class="text-xs text-[var(--color-text-muted)] mb-1">{desc}</p>
+            <span class="text-xs text-[var(--color-primary-400)]">{url}</span>
+          </div>
+        ))}
+      </div>
+
+      <p class="mt-8 text-xs text-[var(--color-text-muted)]">
+        This is a prototype demo. The tools and links above are illustrative only. For real support, visit the actual websites listed or call a helpline in your country.
+      </p>
+    </article>
+  </div>
+</PageLayout>

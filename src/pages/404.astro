@@ -1,0 +1,61 @@
+---
+import type { Locale } from '../i18n/index'
+import { useTranslations } from '../i18n/index'
+import PageLayout from '../layouts/PageLayout.astro'
+import { buildSEO } from '../lib/seo'
+
+const locale = 'en' as Locale;
+const t      = useTranslations(locale);
+
+const seo = buildSEO({
+  title      : '404 — Page Not Found | BRAND Casino',
+  description: 'The page you are looking for does not exist.',
+  canonical  : `${import.meta.env.CANONICAL_URL}/404/`,
+  locale,
+  siteName   : 'BRAND Casino',
+  noIndex    : true,
+});
+---
+
+<PageLayout {...seo} locale={locale} current="">
+  <div class="container py-24 md:py-36 text-center">
+    <!-- Decorative orb -->
+    <div
+      class="w-32 h-32 rounded-full mx-auto mb-8 flex items-center justify-center text-6xl"
+      style="background: linear-gradient(135deg, var(--color-primary-600)22, var(--color-primary-900)22); border: 1px solid var(--color-primary-600)44;"
+      aria-hidden="true"
+    >
+      🎲
+    </div>
+
+    <h1
+      class="text-[clamp(5rem,15vw,12rem)] font-black leading-none mb-4"
+      style="background: linear-gradient(135deg, var(--color-primary-400), var(--color-primary-600)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+    >
+      404
+    </h1>
+
+    <h2 class="text-2xl font-bold text-[var(--color-text-primary)] mb-4">
+      {t.notFound.headline}
+    </h2>
+    <p class="text-[var(--color-text-secondary)] max-w-md mx-auto mb-10">
+      {t.notFound.message}
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a
+        href="/en/"
+        class="inline-flex items-center justify-center px-8 py-3.5 rounded-[var(--radius-xl)] text-sm font-bold text-[var(--color-text-primary)]"
+        style="background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-700)); box-shadow: var(--shadow-glow-primary);"
+      >
+        {t.notFound.cta}
+      </a>
+      <a
+        href="/en/help/"
+        class="inline-flex items-center justify-center px-8 py-3.5 rounded-[var(--radius-xl)] text-sm font-medium border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+      >
+        {t.help.headline}
+      </a>
+    </div>
+  </div>
+</PageLayout>

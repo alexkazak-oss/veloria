@@ -1,0 +1,61 @@
+---
+import { paymentMethods } from '../../data/paymentMethods'
+import type { Locale } from '../../i18n/index'
+import { useTranslations } from '../../i18n/index'
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t          = useTranslations(locale);
+---
+
+<section class="section" aria-labelledby="payments-title">
+  <div class="container">
+    <div class="text-center mb-10">
+      <span class="section-label">
+        🔒 {t.sections.payments}
+      </span>
+      <h2 id="payments-title" class="text-headline text-[var(--color-text-primary)] mb-3">
+        {t.trust.paymentsHeadline}
+      </h2>
+      <p class="text-[var(--color-text-secondary)] max-w-lg mx-auto">
+        {t.trust.paymentsSubline}
+      </p>
+    </div>
+
+    <!-- Payment method pills -->
+    <div class="flex flex-wrap items-center justify-center gap-3 mb-10">
+      {paymentMethods.map((pm) => (
+        <div
+          class="flex items-center gap-2.5 px-4 py-2.5 rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-surface)]"
+          aria-label={pm.name}
+        >
+          <span class="text-2xl leading-none" aria-hidden="true">{pm.icon}</span>
+          <span class="text-sm font-medium text-[var(--color-text-secondary)]">{pm.name}</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- Trust stats row -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {[
+        { value: '<1h',    label: t.trust.withdrawal },
+        { value: '256-bit',label: t.trust.encryption },
+        { value: '24/7',   label: t.trust.support    },
+        { value: '99.9%',  label: t.trust.uptime     },
+      ].map(({ value, label }) => (
+        <div
+          class="card p-5 text-center"
+          aria-label={`${value} ${label}`}
+        >
+          <p
+            class="text-2xl font-black mb-1"
+            style="background: linear-gradient(135deg, var(--color-primary-400), var(--color-cyan-400)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+          >
+            {value}
+          </p>
+          <p class="text-xs text-[var(--color-text-muted)]">{label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,64 @@
+---
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro'
+import type { Locale } from '../../i18n/index'
+import PageLayout from '../../layouts/PageLayout.astro'
+import { buildSEO } from '../../lib/seo'
+
+const locale = 'en' as Locale;
+const seo = buildSEO({
+  title       : 'About Us — Veloria Casino',
+  description : 'Learn about Veloria Casino — our mission, values, and the team behind the demo prototype platform.',
+  canonical   : 'https://veloria.casino/en/about/',
+  locale,
+  siteName    : 'Veloria Casino',
+});
+---
+
+<PageLayout {...seo} locale={locale} current="/en/about/">
+  <div class="container py-8 md:py-14 max-w-3xl">
+    <Breadcrumbs items={[{ label: 'Home', href: '/en/' }, { label: 'About Us', href: '/en/about/' }]} locale={locale} />
+
+    <article class="mt-8 prose-veloria">
+      <h1 class="text-headline text-[var(--color-text-primary)] mb-6">About Veloria</h1>
+
+      <p class="text-[var(--color-text-secondary)] leading-relaxed mb-6">
+        <strong class="text-[var(--color-text-primary)]">Veloria</strong> is a premium UI/UX prototype for a modern iGaming platform.
+        It is not a real casino, does not accept real deposits, and does not host real gambling.
+        All games, promotions, VIP programs, and other features shown are fictional and for demonstration purposes only.
+      </p>
+
+      <h2 class="text-xl font-bold text-[var(--color-text-primary)] mt-10 mb-4">Our Mission</h2>
+      <p class="text-[var(--color-text-secondary)] leading-relaxed mb-6">
+        We exist to prove that responsible, accessible, and well-designed digital entertainment can coexist. Every pixel on Veloria is designed around the player experience — clear information, fast navigation, and honest communication.
+      </p>
+
+      <h2 class="text-xl font-bold text-[var(--color-text-primary)] mt-10 mb-4">Our Values</h2>
+      <ul class="space-y-3 mb-6">
+        {[
+          ['Transparency', 'We show clearly what is a bonus, what the terms are, and what you need to know before you act.'],
+          ['Responsibility', 'We champion responsible gaming tools — limits, self-exclusion, and reality checks are never hidden.'],
+          ['Security', 'All data flows are encrypted. No sensitive information is requested or stored in this prototype.'],
+          ['Inclusivity', 'Our platform is localised in English and German, with full WCAG 2.1 AA accessibility target compliance.'],
+        ].map(([title, desc]) => (
+          <li class="flex gap-3">
+            <span class="text-[var(--color-primary-400)] font-bold flex-shrink-0">✓</span>
+            <div>
+              <strong class="text-[var(--color-text-primary)]">{title}</strong>
+              <p class="text-sm text-[var(--color-text-secondary)]">{desc}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <div
+        class="rounded-[var(--radius-xl)] p-5 mt-10 border border-[var(--color-border)] bg-[var(--color-bg-surface)]"
+        role="note"
+        aria-label="Demo disclaimer"
+      >
+        <p class="text-sm text-[var(--color-text-muted)]">
+          <strong class="text-[var(--color-text-secondary)]">Prototype Disclaimer:</strong> Veloria Casino is a design prototype built for demonstration purposes. No real money, real gambling, or real user data is involved. Please gamble responsibly if you use real gaming platforms. 18+ only.
+        </p>
+      </div>
+    </article>
+  </div>
+</PageLayout>

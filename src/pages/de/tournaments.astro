@@ -1,0 +1,79 @@
+---
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro'
+import { TournamentCard } from '../../components/widgets/TournamentCard'
+import { tournaments } from '../../data/tournaments'
+import type { Locale } from '../../i18n/index'
+import { useTranslations } from '../../i18n/index'
+import PageLayout from '../../layouts/PageLayout.astro'
+import { buildSEO } from '../../lib/seo'
+
+const locale = 'de' as Locale;
+const t      = useTranslations(locale);
+
+const active   = tournaments.filter((t) => t.status === 'active');
+const upcoming = tournaments.filter((t) => t.status === 'upcoming');
+const finished = tournaments.filter((t) => t.status === 'finished');
+
+const seo = buildSEO({
+  title       : 'Turniere — BRAND Casino',
+  description : 'Nehme an Live-Casino-Turnieren bei BRAND teil. Kämpfe um Preispools von bis zu €50.000.',
+  canonical   : `${import.meta.env.CANONICAL_URL}/de/tournaments/`,
+  locale,
+  siteName    : 'BRAND Casino',
+});
+---
+
+<PageLayout {...seo} locale={locale} current="/de/tournaments/">
+  <div class="container py-8 md:py-12">
+    <Breadcrumbs
+      items={[
+        { label: 'Home',    href: '/de/' },
+        { label: 'Turniere', href: '/de/tournaments/' },
+      ]}
+      locale={locale}
+    />
+
+    <div class="mt-6 mb-8">
+      <h1 class="text-headline text-[var(--color-text-primary)] mb-2">{t.tournaments.headline}</h1>
+      <p class="text-[var(--color-text-secondary)]">
+        Konkurriere mit Tausenden von Spielern um riesige Preispools. Neue Turniere jeden Monat.
+      </p>
+    </div>
+
+    {active.length > 0 && (
+      <section class="mb-12" aria-label="Aktive Turniere">
+        <h2 class="flex items-center gap-2 text-lg font-bold text-[var(--color-text-primary)] mb-5">
+          <span class="live-dot" aria-hidden="true" />
+          {t.tournaments.active}
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {active.map((tournament) => (
+            <TournamentCard tournament={tournament} locale={locale} client:idle />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {upcoming.length > 0 && (
+      <section class="mb-12" aria-label="Bevorstehende Turniere">
+        <h2 class="text-lg font-bold text-[var(--color-text-primary)] mb-5">🗓️ {t.tournaments.upcoming}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {upcoming.map((tournament) => (
+            <TournamentCard tournament={tournament} locale={locale} client:idle />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {finished.length > 0 && (
+      <section aria-label="Beendete Turniere">
+        <h2 class="text-lg font-bold text-[var(--color-text-primary)] mb-5">🏁 {t.tournaments.finished}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {finished.map((tournament) => (
+            <TournamentCard tournament={tournament} locale={locale} client:idle />
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+</PageLayout>

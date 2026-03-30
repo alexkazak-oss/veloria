@@ -1,0 +1,37 @@
+---
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro'
+import type { Locale } from '../../i18n/index'
+import PageLayout from '../../layouts/PageLayout.astro'
+import { buildSEO } from '../../lib/seo'
+const locale = 'de' as Locale;
+const seo = buildSEO({ title: 'Cookie-Richtlinie — Veloria Casino', description: 'Erfahre, wie Veloria Casino Cookies verwendet und wie du deine Einstellungen verwalten kannst.', canonical: 'https://BRAND.casino/de/cookie-policy/', locale, siteName: 'Veloria Casino' });
+const cookieTypes = [
+  { name: 'Essentiell',       icon: '🔒', required: true,  desc: 'Für den Betrieb der Website erforderlich. Sitzungsverwaltung, Sicherheits-Tokens und Cookie-Einstellungen.' },
+  { name: 'Funktional',       icon: '⚙️', required: true,  desc: 'Ermöglichen personalisierte Funktionen wie Sprachpräferenz und Einstellungen.' },
+  { name: 'Analyse',          icon: '📊', required: false, desc: 'Helfen uns, die Website-Nutzung durch aggregierte Daten zu verstehen.' },
+  { name: 'Marketing',        icon: '📣', required: false, desc: 'Für personalisierte Angebote. Keine Weitergabe an externe Werbenetzwerke.' },
+];
+---
+<PageLayout {...seo} locale={locale} current="/de/cookie-policy/">
+  <div class="container py-8 md:py-14 max-w-3xl">
+    <Breadcrumbs items={[{ label: 'Home', href: '/de/' }, { label: 'Cookie-Richtlinie', href: '/de/cookie-policy/' }]} locale={locale} />
+    <article class="mt-8">
+      <h1 class="text-headline text-[var(--color-text-primary)] mb-2">Cookie-Richtlinie</h1>
+      <p class="text-xs text-[var(--color-text-muted)] mb-8">Zuletzt aktualisiert: 1. Januar 2026 · Nur Demo-Prototyp</p>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-8">Veloria Casino verwendet Cookies, um die Website zu betreiben, dein Erlebnis zu verbessern und (mit deiner Zustimmung) personalisierte Inhalte anzuzeigen.</p>
+      <h2 class="text-base font-bold text-[var(--color-text-primary)] mb-4">Cookie-Typen</h2>
+      <div class="space-y-4 mb-8">
+        {cookieTypes.map(({ name, icon, required, desc }) => (
+          <div class="card p-5">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-semibold text-[var(--color-text-primary)] flex items-center gap-2"><span aria-hidden="true">{icon}</span>{name}</h3>
+              <span class={`text-xs px-2 py-0.5 rounded-full ${required ? 'bg-[var(--color-primary-600)]22 text-[var(--color-primary-400)]' : 'bg-[var(--color-bg-elevated)] text-[var(--color-text-muted)]'}`}>{required ? 'Erforderlich' : 'Optional'}</span>
+            </div>
+            <p class="text-sm text-[var(--color-text-secondary)]">{desc}</p>
+          </div>
+        ))}
+      </div>
+      <p class="text-xs text-[var(--color-text-muted)]">Diese Cookie-Richtlinie ist fiktiv und Teil eines UI-Demo-Prototyps.</p>
+    </article>
+  </div>
+</PageLayout>

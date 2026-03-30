@@ -1,0 +1,35 @@
+---
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro'
+import type { Locale } from '../../i18n/index'
+import PageLayout from '../../layouts/PageLayout.astro'
+import { buildSEO } from '../../lib/seo'
+const locale = 'de' as Locale;
+const seo = buildSEO({ title: 'Verantwortungsvolles Spielen — BRAND Casino', description: 'BRAND setzt auf verantwortungsvolles Spielen. Einzahlungslimits, Selbstausschluss und Hilfsangebote.', canonical: `${import.meta.env.CANONICAL_URL}/de/responsible-gaming/`, locale, siteName: 'BRAND Casino' });
+const tools = [
+  { icon: '💰', title: 'Einzahlungslimits',   desc: 'Lege tägliche, wöchentliche oder monatliche Limits fest.' },
+  { icon: '⏱️', title: 'Sitzungslimits',      desc: 'Bestimme, wie lange du in einer Sitzung spielen kannst.' },
+  { icon: '🚫', title: 'Selbstausschluss',     desc: 'Pause für 24h, 7 Tage, 30 Tage oder dauerhaft.' },
+  { icon: '🔍', title: 'Realitätscheck',       desc: 'Regelmäßige Erinnerungen während des Spielens.' },
+  { icon: '🛑', title: 'Verlustlimits',        desc: 'Begrenze deine Verluste in einem Zeitraum.' },
+  { icon: '🤝', title: 'Hilfsangebote',        desc: 'Direkte Links zu BZgA, Gamblers Anonymous und weiteren Stellen.' },
+];
+---
+<PageLayout {...seo} locale={locale} current="/de/responsible-gaming/">
+  <div class="container py-8 md:py-14 max-w-3xl">
+    <Breadcrumbs items={[{ label: 'Home', href: '/de/' }, { label: 'Verantwortungsvolles Spielen', href: '/de/responsible-gaming/' }]} locale={locale} />
+    <article class="mt-8">
+      <h1 class="text-headline text-[var(--color-text-primary)] mb-4">Verantwortungsvolles Spielen</h1>
+      <p class="text-[var(--color-text-secondary)] leading-relaxed mb-10">Bei Veloria steht das Wohlbefinden der Spieler an erster Stelle. Die folgenden Tools stehen jedem Spieler kostenlos zur Verfügung.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+        {tools.map(({ icon, title, desc }) => (
+          <div class="card p-5">
+            <span class="text-3xl mb-3 block" aria-hidden="true">{icon}</span>
+            <h2 class="font-bold text-[var(--color-text-primary)] mb-2">{title}</h2>
+            <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">{desc}</p>
+          </div>
+        ))}
+      </div>
+      <p class="text-xs text-[var(--color-text-muted)]">Prototyp-Demo. Alle Werkzeuge und Links sind illustrativ. Für echte Hilfe bitte die tatsächlichen Hilfsangebote besuchen. 18+.</p>
+    </article>
+  </div>
+</PageLayout>

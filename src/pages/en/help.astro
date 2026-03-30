@@ -1,0 +1,98 @@
+---
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro'
+import FAQAccordion from '../../components/widgets/FAQAccordion'
+import { faqItems, getFAQByCategory } from '../../data/faq'
+import type { Locale } from '../../i18n/index'
+import { useTranslations } from '../../i18n/index'
+import PageLayout from '../../layouts/PageLayout.astro'
+import { buildFAQJsonLd, buildSEO } from '../../lib/seo'
+
+const locale = 'en' as Locale;
+const t      = useTranslations(locale);
+
+const categories = [
+  { key: 'account'      as const, label: t.help.categories.account      , icon: '👤' },
+  { key: 'payments'     as const, label: t.help.categories.payments     , icon: '💳' },
+  { key: 'verification' as const, label: t.help.categories.verification , icon: '🔎' },
+  { key: 'responsible'  as const, label: t.help.categories.responsible  , icon: '🛡️' },
+  { key: 'bonuses'      as const, label: t.help.categories.bonuses      , icon: '🎁' },
+];
+
+const seo = buildSEO({
+  title       : 'Help & FAQ — Veloria Casino',
+  description : 'Find answers to all your questions about Veloria Casino — account setup, deposits, withdrawals, verification, bonuses and responsible gaming.',
+  canonical   : 'https://veloria.casino/en/help/',
+  locale,
+  siteName    : 'Veloria Casino',
+});
+
+const faqLd = buildFAQJsonLd(
+  faqItems.map((item) => ({ question: item.question, answer: item.answer })),
+);
+---
+
+<PageLayout {...seo} locale={locale} current="/en/help/">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+  </Fragment>
+
+  <!-- Hero -->
+  <header
+    class="py-14 md:py-20 text-center"
+    style="background: linear-gradient(180deg, var(--color-bg-surface) 0%, var(--color-bg-base) 100%);"
+    aria-label="Help center hero"
+  >
+    <div class="container">
+      <Breadcrumbs
+        items={[{ label: 'Home', href: '/en/' }, { label: 'Help', href: '/en/help/' }]}
+        locale={locale}
+        class="justify-center mb-6"
+      />
+      <h1 class="text-headline text-[var(--color-text-primary)] mb-3">{t.help.headline}</h1>
+      <p class="text-[var(--color-text-secondary)] max-w-lg mx-auto">
+        Browse categories below or use the quick links to get fast answers.
+      </p>
+    </div>
+  </header>
+
+  <div class="container py-10 space-y-14">
+    <!-- Contact strip -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto">
+      <div
+        class="card p-5 flex items-center gap-4"
+        role="region"
+        aria-label="Live chat support"
+      >
+        <span class="text-3xl" aria-hidden="true">💬</span>
+        <div>
+          <p class="font-bold text-[var(--color-text-primary)]">{t.help.liveChat}</p>
+          <p class="text-sm text-[var(--color-text-muted)]">{t.help.chatSub}</p>
+        </div>
+      </div>
+      <div
+        class="card p-5 flex items-center gap-4"
+        role="region"
+        aria-label="Email support"
+      >
+        <span class="text-3xl" aria-hidden="true">📧</span>
+        <div>
+          <p class="font-bold text-[var(--color-text-primary)]">{t.help.email}</p>
+          <p class="text-sm text-[var(--color-text-muted)]">{t.help.emailSub}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ by category -->
+    {categories.map(({ key, label, icon }) => {
+      const items = getFAQByCategory(key);
+      return (
+        <section aria-label={`${label} FAQ`}>
+          <h2 class="flex items-center gap-2 text-xl font-bold text-[var(--color-text-primary)] mb-5">
+            <span aria-hidden="true">{icon}</span>{label}
+          </h2>
+          <FAQAccordion items={items} client:idle />
+        </section>
+      );
+    })}
+  </div>
+</PageLayout>

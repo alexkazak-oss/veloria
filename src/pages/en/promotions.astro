@@ -1,0 +1,55 @@
+---
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro'
+import { PromoCard } from '../../components/widgets/PromoCard'
+import { promotions } from '../../data/promotions'
+import type { Locale } from '../../i18n/index'
+import { useTranslations } from '../../i18n/index'
+import PageLayout from '../../layouts/PageLayout.astro'
+import { buildSEO } from '../../lib/seo'
+
+const locale = 'en' as Locale;
+const t      = useTranslations(locale);
+
+const seo = buildSEO({
+  title       : 'Promotions & Bonuses — Veloria Casino',
+  description : 'Claim exclusive casino bonuses at Veloria — welcome pack, reload bonuses, weekly cashback, free spins, VIP rewards and more.',
+  canonical   : 'https://veloria.casino/en/promotions/',
+  locale,
+  siteName    : 'Veloria Casino',
+});
+
+const types = ['all', 'welcome', 'reload', 'cashback', 'vip', 'referral', 'weekend'] as const;
+type FilterType = typeof types[number];
+---
+
+<PageLayout {...seo} locale={locale} current="/en/promotions/">
+  <div class="container py-8 md:py-12">
+    <Breadcrumbs
+      items={[
+        { label: 'Home',       href: '/en/' },
+        { label: 'Promotions', href: '/en/promotions/' },
+      ]}
+      locale={locale}
+    />
+
+    <div class="mt-6 mb-8">
+      <h1 class="text-headline text-[var(--color-text-primary)] mb-2">{t.nav.promotions}</h1>
+      <p class="text-[var(--color-text-secondary)]">
+        Exclusive offers for every player — from welcome bonuses to VIP rewards.
+      </p>
+    </div>
+
+    <!-- Grid (all promotions) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {promotions.map((promo) => (
+        <PromoCard promo={promo} client:idle />
+      ))}
+    </div>
+
+    <!-- Promo disclaimer -->
+    <p class="mt-10 text-xs text-[var(--color-text-muted)] text-center max-w-2xl mx-auto leading-relaxed">
+      All bonuses are for demonstration purposes only. Wagering requirements, minimum deposits and expiry dates are fictional and form part of this prototype UI only.
+      Please gamble responsibly. 18+.
+    </p>
+  </div>
+</PageLayout>

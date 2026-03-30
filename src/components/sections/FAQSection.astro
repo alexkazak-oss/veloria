@@ -1,0 +1,35 @@
+---
+import { getFAQPreview } from '../../data/faq'
+import type { Locale } from '../../i18n/index'
+import { getLocalePath, useTranslations } from '../../i18n/index'
+import FAQAccordion from '../widgets/FAQAccordion'
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t          = useTranslations(locale);
+const preview    = getFAQPreview(6);
+---
+
+<section class="section" aria-labelledby="faq-title">
+  <div class="container max-w-3xl">
+    <div class="text-center mb-10">
+      <span class="section-label">❓ {t.nav.help}</span>
+      <h2 id="faq-title" class="text-headline text-[var(--color-text-primary)] mb-3">
+        {t.help.faqHeadline}
+      </h2>
+      <p class="text-[var(--color-text-secondary)]">{t.help.faqSubline}</p>
+    </div>
+
+    <FAQAccordion items={preview} client:idle />
+
+    <div class="mt-8 text-center">
+      <a
+        href={getLocalePath(locale, '/help')}
+        class="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-primary-400)] hover:text-[var(--color-primary-300)] transition-colors"
+      >
+        {t.help.viewAllFAQ}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>

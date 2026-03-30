@@ -1,0 +1,109 @@
+---
+import type { Locale } from '../../i18n/index';
+import { useTranslations } from '../../i18n/index';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section class="gradient-hero relative overflow-hidden" aria-labelledby="hero-headline">
+  <!-- Decorative orbs -->
+  <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+    <div class="absolute top-[-20%] left-[10%] w-[500px] h-[500px] rounded-full opacity-20"
+         style="background: radial-gradient(circle, #7c3aed 0%, transparent 70%);"></div>
+    <div class="absolute bottom-[-10%] right-[5%] w-[400px] h-[400px] rounded-full opacity-15"
+         style="background: radial-gradient(circle, #22d3ee 0%, transparent 70%);"></div>
+  </div>
+
+  <div class="container section relative z-10">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+      <!-- Copy -->
+      <div class="max-w-xl">
+        <span class="section-label">{t.hero.badge}</span>
+        <h1 id="hero-headline" class="text-display text-[var(--color-text-primary)] mb-6">
+          {t.hero.headline.split('\n').map((line, i) =>
+            i === 0
+              ? <span>{line}<br/></span>
+              : <span class="text-[var(--color-primary-400)] glow-text-primary">{line}</span>
+          )}
+        </h1>
+        <p class="text-lg text-[var(--color-text-secondary)] leading-relaxed mb-8 max-w-md">{t.hero.subline}</p>
+
+        <div class="flex flex-col sm:flex-row gap-3 mb-5">
+          <a
+            href="#demo"
+            class="inline-flex items-center justify-center px-8 py-4 rounded-[var(--radius-2xl)] text-base font-bold text-white"
+            style="background: var(--color-primary-600); box-shadow: var(--shadow-glow-primary);"
+          >
+            {t.hero.cta}
+          </a>
+          <a
+            href={`/${locale}/games`}
+            class="inline-flex items-center justify-center px-8 py-4 rounded-[var(--radius-2xl)] text-base font-medium text-[var(--color-text-secondary)] border border-[var(--color-border)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-border-strong)] transition-colors"
+          >
+            Browse Games
+          </a>
+        </div>
+        <p class="text-xs text-[var(--color-text-muted)]">{t.hero.trustNote}</p>
+      </div>
+
+      <!-- Offer card -->
+      <div class="relative">
+        <div
+          class="rounded-[var(--radius-2xl)] p-8 relative overflow-hidden"
+          style="background: var(--color-bg-card); border: 1px solid var(--color-border-strong); box-shadow: var(--shadow-card);"
+        >
+          <!-- Card glow -->
+          <div class="absolute inset-0 opacity-30 pointer-events-none" aria-hidden="true"
+               style="background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(124,58,237,0.5) 0%, transparent 70%);"></div>
+
+          <div class="relative z-10">
+            <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-primary-400)] mb-3">Welcome Offer</p>
+            <p class="text-5xl font-extrabold text-white mb-1">€5,000</p>
+            <p class="text-lg text-[var(--color-gold-400)] font-semibold mb-6">+ 200 Free Spins</p>
+
+            <div class="flex flex-col gap-3 mb-6">
+              {[
+                { step: '1', text: 'Register & verify' },
+                { step: '2', text: 'Deposit from €20' },
+                { step: '3', text: '100% match instantly' },
+              ].map(({ step, text }) => (
+                <div class="flex items-center gap-3">
+                  <span
+                    class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
+                    style="background: var(--color-primary-700); color: white;"
+                  >{step}</span>
+                  <span class="text-sm text-[var(--color-text-secondary)]">{text}</span>
+                </div>
+              ))}
+            </div>
+
+            <a
+              href={`/${locale}/promotions`}
+              class="block w-full text-center px-6 py-3 rounded-[var(--radius-xl)] text-sm font-bold text-[var(--color-text-inverse)]"
+              style="background: linear-gradient(135deg, var(--color-gold-500), var(--color-gold-600)); box-shadow: var(--shadow-glow-gold);"
+            >
+              {t.hero.cta}
+            </a>
+            <p class="text-center mt-3 text-xs text-[var(--color-text-muted)]">{t.hero.ctaSub}</p>
+          </div>
+        </div>
+
+        <!-- Floating stats -->
+        <div class="absolute -bottom-5 -left-5 hidden lg:flex items-center gap-2 px-4 py-3 rounded-[var(--radius-xl)] glass shadow-[var(--shadow-card)]">
+          <span class="text-2xl font-extrabold text-[var(--color-primary-400)]">3,000+</span>
+          <span class="text-xs text-[var(--color-text-secondary)]">Games<br/>Available</span>
+        </div>
+        <div class="absolute -top-5 -right-5 hidden lg:flex items-center gap-2 px-4 py-3 rounded-[var(--radius-xl)] glass shadow-[var(--shadow-card)]">
+          <span class="live-dot w-2 h-2" aria-hidden="true"></span>
+          <span class="text-xs text-[var(--color-text-secondary)]"><strong class="text-[var(--color-text-primary)]">12,400+</strong><br/>Players Online</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

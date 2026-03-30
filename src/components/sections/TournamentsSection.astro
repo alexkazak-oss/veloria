@@ -1,0 +1,54 @@
+---
+import { getActiveTournaments } from '../../data/tournaments'
+import type { Locale } from '../../i18n/index'
+import { getLocalePath, useTranslations } from '../../i18n/index'
+import { TournamentCard } from '../widgets/TournamentCard'
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t          = useTranslations(locale);
+const active     = getActiveTournaments();
+---
+
+<section class="section" aria-labelledby="tournaments-title">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <span class="section-label">
+          🏆 {t.sections.tournaments}
+        </span>
+        <h2 id="tournaments-title" class="text-headline text-[var(--color-text-primary)]">
+          {t.tournaments.headline}
+        </h2>
+      </div>
+      <a
+        href={getLocalePath(locale, '/tournaments')}
+        class="hidden sm:inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-primary-400)] hover:text-[var(--color-primary-300)] transition-colors"
+        aria-label={t.common.viewAll + ' tournaments'}
+      >
+        {t.common.viewAll}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
+
+    {active.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {active.map((tournament) => (
+          <TournamentCard tournament={tournament} locale={locale} client:idle />
+        ))}
+      </div>
+    ) : (
+      <p class="text-center text-[var(--color-text-muted)] py-12">{t.tournaments.noActive}</p>
+    )}
+
+    <div class="mt-8 text-center sm:hidden">
+      <a
+        href={getLocalePath(locale, '/tournaments')}
+        class="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-primary-400)] hover:text-[var(--color-primary-300)] transition-colors"
+      >
+        {t.common.viewAll} {t.nav.tournaments}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>

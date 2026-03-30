@@ -1,0 +1,59 @@
+---
+import LoginForm from '../../components/auth/LoginForm'
+import type { Locale } from '../../i18n/index'
+import PageLayout from '../../layouts/PageLayout.astro'
+import { buildSEO } from '../../lib/seo'
+
+const locale = 'en' as Locale
+
+const seo = buildSEO({
+  title       : 'Log In — Veloria Casino',
+  description : 'Sign in to your Veloria Casino account to access your games, bonuses and account.',
+  canonical   : 'https://veloria.casino/en/login/',
+  locale,
+  noIndex     : true,
+  siteName    : 'Veloria Casino',
+})
+
+// Sanitise ?next= to prevent open-redirect attacks.
+// Only allow root-relative paths (starts with "/" but not "//").
+const rawNext = Astro.url.searchParams.get('next')
+const redirectTo =
+  rawNext && rawNext.startsWith('/') && !rawNext.startsWith('//')
+    ? rawNext
+    : `/${locale}/`
+---
+
+<PageLayout {...seo} locale={locale} current="/en/login/">
+  <div class="container flex items-center justify-center min-h-[calc(100dvh-12rem)] py-12 px-4">
+    <div class="w-full max-w-md">
+
+      <!-- Card -->
+      <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-surface)] p-8 shadow-2xl">
+
+        <!-- Logo + headings -->
+        <div class="mb-8 text-center">
+          <a href={`/${locale}/`} class="inline-flex items-center gap-2 mb-6" aria-label="Veloria Home">
+            <svg width="36" height="36" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <rect width="32" height="32" rx="8" fill="url(#login-logo-en)" />
+              <path d="M8 9h4l4 10 4-10h4L16 24 8 9z" fill="white" />
+              <defs>
+                <linearGradient id="login-logo-en" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#7c3aed" />
+                  <stop offset="1" stop-color="#4c1d95" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <span class="font-bold text-xl text-[var(--color-text-primary)]">Veloria</span>
+          </a>
+          <h1 class="text-2xl font-bold text-[var(--color-text-primary)]">Welcome back</h1>
+          <p class="mt-1.5 text-sm text-[var(--color-text-muted)]">Sign in to your Veloria account</p>
+        </div>
+
+        <!-- React island -->
+        <LoginForm locale={locale} redirectTo={redirectTo} client:load />
+
+      </div>
+    </div>
+  </div>
+</PageLayout>

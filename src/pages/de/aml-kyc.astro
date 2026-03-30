@@ -1,0 +1,26 @@
+---
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro'
+import type { Locale } from '../../i18n/index'
+import PageLayout from '../../layouts/PageLayout.astro'
+import { buildSEO } from '../../lib/seo'
+const locale = 'de' as Locale;
+const seo = buildSEO({ title: 'AML & KYC — Veloria Casino', description: 'Geldwäscheprävention und Kundenidentifikation bei Veloria Casino. Demo-Dokument.', canonical: 'https://BRAND.casino/de/aml-kyc/', locale, siteName: 'Veloria Casino' });
+---
+<PageLayout {...seo} locale={locale} current="/de/aml-kyc/">
+  <div class="container py-8 md:py-14 max-w-3xl">
+    <Breadcrumbs items={[{ label: 'Home', href: '/de/' }, { label: 'AML & KYC', href: '/de/aml-kyc/' }]} locale={locale} />
+    <article class="mt-8">
+      <h1 class="text-headline text-[var(--color-text-primary)] mb-2">AML & KYC-Richtlinie</h1>
+      <p class="text-xs text-[var(--color-text-muted)] mb-8">Zuletzt aktualisiert: 1. Januar 2026 · Nur Demo-Prototyp</p>
+      <div class="space-y-6 text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        <section><h2 class="text-base font-bold text-[var(--color-text-primary)] mb-2">Unser Engagement</h2><p>Veloria Casino setzt auf die Verhinderung von Geldwäsche und Terrorismusfinanzierung gemäß den geltenden AML-Vorschriften.</p></section>
+        <section><h2 class="text-base font-bold text-[var(--color-text-primary)] mb-2">KYC-Anforderungen</h2><p>Alle Spieler müssen eine Identitätsprüfung vor der ersten Auszahlung abschließen: amtlicher Lichtbildausweis, Adressnachweis (max. 3 Monate alt) und Zahlungsmittelnachweis.</p></section>
+        <section><h2 class="text-base font-bold text-[var(--color-text-primary)] mb-2">Transaktionsüberwachung</h2><p>Alle Transaktionen unterliegen einer automatisierten Überwachung auf verdächtige Muster. Verdächtige Aktivitäten werden den zuständigen Behörden gemeldet.</p></section>
+        <section><h2 class="text-base font-bold text-[var(--color-text-primary)] mb-2">Herkunft der Gelder</h2><p>Spieler mit kumulierten Einzahlungen über €10.000 innerhalb von 30 Tagen können nach dem Verwendungszweck der Mittel gefragt werden.</p></section>
+      </div>
+      <div class="mt-10 p-4 rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-surface)]" role="note">
+        <p class="text-xs text-[var(--color-text-muted)]">Diese Richtlinie ist fiktiv und Teil eines UI-Demo-Prototyps.</p>
+      </div>
+    </article>
+  </div>
+</PageLayout>

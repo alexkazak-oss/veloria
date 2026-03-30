@@ -1,0 +1,51 @@
+---
+import Breadcrumbs from '../../../components/layout/Breadcrumbs.astro'
+import GameCatalog from '../../../components/widgets/GameCatalog'
+import type { Locale } from '../../../i18n/index'
+import { useTranslations } from '../../../i18n/index'
+import PageLayout from '../../../layouts/PageLayout.astro'
+import { buildBreadcrumbJsonLd, buildSEO } from '../../../lib/seo'
+
+const locale = 'de' as Locale;
+const t      = useTranslations(locale);
+
+const seo = buildSEO({
+  title       : 'Alle Spiele — Veloria Casino',
+  description : 'Entdecke über 500 Slots, Live-Casino-Tische, Jackpots, Crash-Spiele und mehr bei Veloria Casino.',
+  canonical   : 'https://BRAND.casino/de/games/',
+  locale,
+  siteName    : 'Veloria Casino',
+});
+
+const breadcrumbLd = buildBreadcrumbJsonLd(
+  [
+    { label: 'Home',   url: 'https://BRAND.casino/de/' },
+    { label: 'Spiele', url: 'https://BRAND.casino/de/games/' },
+  ],
+);
+---
+
+<PageLayout {...seo} locale={locale} current="/de/games/">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+  </Fragment>
+
+  <div class="container py-8 md:py-12">
+    <Breadcrumbs
+      items={[
+        { label: 'Home',   href: '/de/' },
+        { label: 'Spiele', href: '/de/games/' },
+      ]}
+      locale={locale}
+    />
+
+    <div class="mt-6 mb-8">
+      <h1 class="text-headline text-[var(--color-text-primary)] mb-2">{t.nav.games}</h1>
+      <p class="text-[var(--color-text-secondary)]">
+        Alle 500+ Spiele — Slots, Live-Casino, Jackpots und mehr.
+      </p>
+    </div>
+
+    <GameCatalog locale={locale} client:load />
+  </div>
+</PageLayout>

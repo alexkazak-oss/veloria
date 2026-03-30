@@ -1,0 +1,104 @@
+---
+import type { GetStaticPaths } from 'astro'
+import Breadcrumbs from '../../../components/layout/Breadcrumbs.astro'
+import { GameCard } from '../../../components/widgets/GameCard'
+import { gameCategories, getGamesByCategory } from '../../../data/games'
+import type { Locale } from '../../../i18n/index'
+import { getLocalePath } from '../../../i18n/index'
+import PageLayout from '../../../layouts/PageLayout.astro'
+import { buildBreadcrumbJsonLd, buildSEO } from '../../../lib/seo'
+import type { GameCategory } from '../../../types/game'
+
+export const getStaticPaths = (() => {
+  return gameCategories.map((cat) => ({
+    params: { category: cat.id },
+    props:  { cat },
+  }));
+}) satisfies GetStaticPaths;
+
+const locale   = 'en' as Locale;
+const { cat }  = Astro.props;
+const catGames = getGamesByCategory(cat.id as GameCategory);
+const related  = gameCategories.filter((c) => c.id !== cat.id);
+
+const seo = buildSEO({
+  title       : `${cat.label} Games — Veloria Casino`,
+  description : `${cat.description} Play ${catGames.length}+ ${cat.label.toLowerCase()} games at Veloria Casino.`,
+  canonical   : `https://veloria.casino/en/games/${cat.id}/`,
+  locale,
+  siteName    : 'Veloria Casino',
+});
+
+const breadcrumbLd = buildBreadcrumbJsonLd(
+  [
+    { label: 'Home',     url: 'https://veloria.casino/en/' },
+    { label: 'Games',    url: 'https://veloria.casino/en/games/' },
+    { label: cat.label,  url: `https://veloria.casino/en/games/${cat.id}/` },
+  ],
+);
+---
+
+<PageLayout {...seo} locale={locale} current={`/en/games/${cat.id}/`}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+  </Fragment>
+
+  <!-- Category hero -->
+  <header
+    class="relative py-16 md:py-24 overflow-hidden"
+    style={`background: ${cat.gradient};`}
+    aria-label={`${cat.label} category hero`}
+  >
+    <div class="absolute inset-0 bg-[var(--color-bg-base)]80 backdrop-blur-sm" aria-hidden="true" />
+    <div class="container relative z-10">
+      <Breadcrumbs
+        items={[
+          { label: 'Home',    href: '/en/' },
+          { label: 'Games',   href: '/en/games/' },
+          { label: cat.label, href: `/en/games/${cat.id}/` },
+        ]}
+        locale={locale}
+      />
+
+      <div class="mt-6 flex items-center gap-5">
+        <span class="text-5xl" aria-hidden="true">{cat.icon}</span>
+        <div>
+          <h1 class="text-headline text-[var(--color-text-primary)]">{cat.label}</h1>
+          <p class="text-[var(--color-text-secondary)] mt-1 max-w-xl">{cat.description}</p>
+        </div>
+      </div>
+      <p class="mt-4 text-sm text-[var(--color-text-muted)]">
+        {catGames.length} games available
+      </p>
+    </div>
+  </header>
+
+  <div class="container py-10">
+    <!-- Games grid -->
+    {catGames.length > 0 ? (
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+        {catGames.map((game) => (
+          <GameCard game={game} locale={locale} client:idle />
+        ))}
+      </div>
+    ) : (
+      <p class="text-center text-[var(--color-text-muted)] py-20">No games found in this category.</p>
+    )}
+
+    <!-- Related categories -->
+    <section class="mt-16" aria-label="Other categories">
+      <h2 class="text-lg font-bold text-[var(--color-text-primary)] mb-5">Other Categories</h2>
+      <div class="flex flex-wrap gap-3">
+        {related.map((c) => (
+          <a
+            href={getLocalePath(locale, `/games/${c.id}/`)}
+            class="flex items-center gap-2 px-4 py-2 rounded-[var(--radius-xl)] border border-[var(--color-border)] text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-primary-500)] transition-colors"
+          >
+            <span aria-hidden="true">{c.icon}</span>
+            {c.label}
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+</PageLayout>

@@ -1,0 +1,110 @@
+---
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro'
+import { vipBenefitRows, vipLevels } from '../../data/vipLevels'
+import type { Locale } from '../../i18n/index'
+import { useTranslations } from '../../i18n/index'
+import PageLayout from '../../layouts/PageLayout.astro'
+import { buildSEO } from '../../lib/seo'
+
+const locale = 'de' as Locale;
+const t      = useTranslations(locale);
+
+const seo = buildSEO({
+  title       : 'VIP-Club — BRAND Casino',
+  description : 'Tritt dem BRAND VIP-Club bei. Verdiene Comp-Punkte und schalte exklusives Cashback, persönliche Kontomanager, schnellere Auszahlungen und Luxusbelohnungen frei.',
+  canonical   : `${import.meta.env.CANONICAL_URL}/de/vip/`,
+  locale,
+  siteName    : 'BRAND Casino',
+});
+---
+
+<PageLayout {...seo} locale={locale} current="/de/vip/">
+  <header
+    class="relative py-20 md:py-28 overflow-hidden text-center"
+    style="background: linear-gradient(135deg, #1e0a3c 0%, #080c18 60%, #2a1505 100%);"
+    aria-label="VIP-Club Hero"
+  >
+    <div
+      class="absolute inset-0 opacity-20"
+      style="background: radial-gradient(ellipse 60% 50% at 50% 0%, var(--color-gold-500), transparent);"
+      aria-hidden="true"
+    />
+    <div class="container relative z-10">
+      <Breadcrumbs
+        items={[{ label: 'Home', href: '/de/' }, { label: 'VIP', href: '/de/vip/' }]}
+        locale={locale}
+        class="justify-center mb-6"
+      />
+      <p class="text-xs font-bold uppercase tracking-[0.3em] text-[var(--color-gold-500)] mb-4">✦ VIP-Club</p>
+      <h1 class="text-[clamp(2.5rem,6vw,5rem)] font-black leading-none text-[var(--color-text-primary)] mb-6">
+        Tritt der Elite bei.<br />
+        <span style="background: linear-gradient(135deg, var(--color-gold-400), var(--color-gold-600)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+          Verdiene legendäre Prämien.
+        </span>
+      </h1>
+      <p class="text-[var(--color-text-secondary)] max-w-xl mx-auto mb-8 text-lg leading-relaxed">
+        Fünf Exklusivitätsstufen — jede Wette bringt Comp-Punkte, die Cashback, persönliche Manager, individuelle Limits und unvergessliche Erlebnisse freischalten.
+      </p>
+      <a
+        href="/de/"
+        class="inline-flex items-center justify-center px-10 py-4 rounded-[var(--radius-xl)] text-base font-bold text-[var(--color-text-inverse)]"
+        style="background: linear-gradient(135deg, var(--color-gold-500), var(--color-gold-600)); box-shadow: var(--shadow-glow-gold);"
+      >
+        Spielen und VIP-Punkte verdienen
+      </a>
+    </div>
+  </header>
+
+  <div class="container py-14 space-y-16">
+    <section aria-label="VIP-Stufen">
+      <h2 class="text-2xl font-bold text-[var(--color-text-primary)] text-center mb-8">{t.vip.levels}</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        {vipLevels.map((level) => (
+          <div class="card p-6 flex flex-col gap-3" style={`border: 1px solid ${level.color}44;`}>
+            <div class="w-12 h-12 rounded-[var(--radius-xl)] flex items-center justify-center text-2xl" style={`background: ${level.gradient};`} aria-hidden="true">{level.icon}</div>
+            <div>
+              <p class="font-bold text-[var(--color-text-primary)]" style={`color: ${level.color};`}>{level.name}</p>
+              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">{level.minPoints.toLocaleString()}{level.maxPoints ? `–${level.maxPoints.toLocaleString()}` : '+'} Pkte</p>
+            </div>
+            <ul class="space-y-1.5 flex-1">
+              {level.features.slice(0, 4).map((f) => (
+                <li class="text-xs text-[var(--color-text-secondary)] flex items-start gap-1.5">
+                  <span style={`color: ${level.color};`} aria-hidden="true">✓</span> {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section aria-label="VIP-Vergleichstabelle">
+      <h2 class="text-2xl font-bold text-[var(--color-text-primary)] text-center mb-6">{t.vip.compare}</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr>
+              <th class="text-left py-3 pr-4 text-[var(--color-text-muted)] font-medium w-48">Vorteil</th>
+              {vipLevels.map((level) => (
+                <th class="text-center py-3 px-3 font-bold" style={`color: ${level.color};`}>{level.icon} {level.name}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {vipBenefitRows.map((row, i) => (
+              <tr class={i % 2 === 0 ? 'bg-[var(--color-bg-surface)]50' : ''}>
+                <td class="py-3 pr-4 text-[var(--color-text-secondary)] font-medium">{row.label}</td>
+                {vipLevels.map((level) => (
+                  <td class="py-3 px-3 text-center text-[var(--color-text-primary)] font-mono text-xs">
+                    {/* @ts-expect-error dynamic key */}
+                    {row.format(level[row.key])}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</PageLayout>

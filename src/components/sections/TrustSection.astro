@@ -1,0 +1,48 @@
+---
+import type { Locale } from '../../i18n/index'
+import { useTranslations } from '../../i18n/index'
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t          = useTranslations(locale);
+
+const badges = [
+  { icon: '🔒', title: t.trust.ssl,         desc: t.trust.sslDesc         },
+  { icon: '🏛️', title: t.trust.licensed,    desc: t.trust.licensedDesc    },
+  { icon: '🎲', title: t.trust.fairPlay,    desc: t.trust.fairPlayDesc    },
+  { icon: '🛡️', title: t.trust.responsible, desc: t.trust.responsibleDesc },
+];
+---
+
+<section
+  class="section border-t border-[var(--color-border)]"
+  aria-labelledby="trust-title"
+>
+  <div class="container">
+    <div class="text-center mb-10">
+      <h2 id="trust-title" class="text-headline text-[var(--color-text-primary)] mb-3">
+        {t.trust.headline}
+      </h2>
+      <p class="text-[var(--color-text-secondary)] max-w-xl mx-auto">
+        {t.trust.subline}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      {badges.map(({ icon, title, desc }) => (
+        <div class="card p-6 flex flex-col items-start gap-3">
+          <span class="text-4xl leading-none" aria-hidden="true">{icon}</span>
+          <h3 class="font-bold text-[var(--color-text-primary)]">{title}</h3>
+          <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">{desc}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- License strip -->
+    <p
+      class="text-center text-xs text-[var(--color-text-muted)] mt-10 max-w-2xl mx-auto leading-relaxed"
+    >
+      {t.trust.licenseText}
+    </p>
+  </div>
+</section>

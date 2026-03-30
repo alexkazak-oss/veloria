@@ -1,0 +1,37 @@
+---
+import Breadcrumbs from '../../components/layout/Breadcrumbs.astro'
+import type { Locale } from '../../i18n/index'
+import PageLayout from '../../layouts/PageLayout.astro'
+import { buildSEO } from '../../lib/seo'
+const locale = 'de' as Locale;
+const seo = buildSEO({ title: 'AGB — BRAND Casino', description: 'Allgemeine Geschäftsbedingungen von BRAND Casino. Demo-Dokument für Prototypzwecke.', canonical: `${import.meta.env.CANONICAL_URL}/de/terms/`, locale, siteName: 'BRAND Casino' });
+---
+<PageLayout {...seo} locale={locale} current="/de/terms/">
+  <div class="container py-8 md:py-14 max-w-3xl">
+    <Breadcrumbs items={[{ label: 'Home', href: '/de/' }, { label: 'AGB', href: '/de/terms/' }]} locale={locale} />
+    <article class="mt-8">
+      <h1 class="text-headline text-[var(--color-text-primary)] mb-2">Allgemeine Geschäftsbedingungen</h1>
+      <p class="text-xs text-[var(--color-text-muted)] mb-8">Zuletzt aktualisiert: 1. Januar 2026 · Nur Demo-Prototyp</p>
+      <div class="space-y-6 text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        {[
+          ['1. Allgemeines', 'Diese AGB regeln die Nutzung der BRAND-Website. Mit dem Zugriff auf die Seite akzeptierst du diese Bedingungen. BRAND Casino ist ein Demonstrationsprototyp und kein lizenziertes Glücksspielunternehmen.'],
+          ['2. Altersbeschränkung', 'Du musst mindestens 18 Jahre alt sein, um den Service nutzen zu dürfen. Die Nutzung durch Minderjährige ist strengstens verboten.'],
+          ['3. Kontoregistrierung', 'Du bist für die Vertraulichkeit deiner Zugangsdaten verantwortlich. Pro Person ist nur ein Konto erlaubt.'],
+          ['4. Boni & Aktionen', 'Angebote unterliegen individuellen Bedingungen inklusive Mindesteinzahlung und Umsatzbedingungen. Missbrauch kann zur Kontosperrung führen.'],
+          ['5. Faires Spielen', 'Alle Spiele nutzen zertifizierte Zufallszahlengeneratoren (RNG).'],
+          ['6. Verantwortungsvolles Spielen', 'Wir bieten Werkzeuge wie Einzahlungslimits und Selbstausschluss an.'],
+          ['7. Haftungsbeschränkung', 'Veloria schließt alle Haftung für indirekte Schäden im gesetzlich zulässigen Umfang aus.'],
+          ['8. Änderungen', 'Wir behalten uns das Recht vor, diese AGB jederzeit zu ändern. Wesentliche Änderungen werden 14 Tage im Voraus angekündigt.'],
+        ].map(([title, body]) => (
+          <div>
+            <h2 class="text-base font-bold text-[var(--color-text-primary)] mb-1">{title}</h2>
+            <p>{body}</p>
+          </div>
+        ))}
+      </div>
+      <div class="mt-10 p-4 rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-surface)]" role="note">
+        <p class="text-xs text-[var(--color-text-muted)]">Diese AGB sind fiktiv und Teil eines UI-Demo-Prototyps. Veloria Casino betreibt kein echtes Casino.</p>
+      </div>
+    </article>
+  </div>
+</PageLayout>

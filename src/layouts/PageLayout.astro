@@ -1,0 +1,47 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import CookieBanner from '../components/shared/CookieBanner';
+import type { SEOProps } from '../types/common';
+import type { Locale } from '../i18n/index';
+import { useTranslations } from '../i18n/index';
+
+interface Props extends SEOProps {
+  locale:   Locale;
+  current?: string;
+  /** Extra class on the <main> element */
+  mainClass?: string;
+}
+
+const { locale, current, mainClass, ...seo } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<BaseLayout {...seo} locale={locale}>
+  <!-- Top promo bar -->
+  <div
+    id="promo-bar"
+    class="bg-gradient-to-r from-[var(--color-primary-800)] via-[var(--color-primary-700)] to-[var(--color-primary-800)] py-2 px-4 text-center text-xs font-medium text-white/90"
+  >
+    🎁 {t.hero.badge} — {t.hero.subline.split('.')[0]}. &nbsp;
+    <a href={`/${locale}/promotions`} class="underline font-bold text-white">{t.sections.learnMore} →</a>
+  </div>
+
+  <Header locale={locale} current={current} />
+
+  <main id="main-content" tabindex="-1" class:list={['flex-1', mainClass]}>
+    <slot />
+  </main>
+
+  <Footer locale={locale} />
+
+  <CookieBanner
+    client:idle
+    learnMoreHref={`/${locale}/cookie-policy`}
+    message={t.cookie.message}
+    acceptLabel={t.cookie.accept}
+    declineLabel={t.cookie.decline}
+    learnMoreLabel={t.cookie.learnMore}
+  />
+</BaseLayout>

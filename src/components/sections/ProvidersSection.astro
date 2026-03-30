@@ -1,0 +1,54 @@
+---
+import type { Locale } from '../../i18n/index';
+import { useTranslations } from '../../i18n/index';
+import { getPopularProviders } from '../../data/providers';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t         = useTranslations(locale);
+const providers = getPopularProviders(8);
+---
+
+<section class="section bg-[var(--color-bg-surface)]" aria-labelledby="providers-title">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <span class="section-label">{t.sections.providers}</span>
+        <h2 id="providers-title" class="text-headline text-[var(--color-text-primary)]">Our Providers</h2>
+      </div>
+      <a
+        href={`/${locale}/providers`}
+        class="hidden sm:flex items-center gap-1.5 text-sm font-medium text-[var(--color-primary-400)] hover:text-[var(--color-primary-300)] transition-colors"
+      >
+        {t.sections.viewAll}
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <ul class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3" role="list">
+      {providers.map((p) => (
+        <li>
+          <a
+            href={`/${locale}/providers/${p.slug}`}
+            class="card neon-border group flex flex-col items-center gap-2 p-4 text-center"
+            aria-label={`${p.name} — ${p.gameCount} games`}
+          >
+            <div
+              class="w-12 h-12 rounded-[var(--radius-xl)] flex items-center justify-center text-sm font-bold"
+              style="background: var(--color-bg-elevated); border: 1px solid var(--color-border); color: var(--color-primary-400);"
+              aria-hidden="true"
+            >
+              {p.logo}
+            </div>
+            <p class="text-xs font-semibold text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)] transition-colors truncate w-full">
+              {p.name}
+            </p>
+            <p class="text-[0.6rem] text-[var(--color-text-muted)]">{p.gameCount} games</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

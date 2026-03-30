@@ -1,0 +1,54 @@
+---
+import type { Locale } from '../../i18n/index'
+import type { Breadcrumb } from '../../types/common'
+
+interface Props {
+  items: Breadcrumb[];
+  locale?: Locale;
+  class?: string;
+}
+
+const { items, class: className } = Astro.props;
+---
+
+{items.length > 1 && (
+  <nav aria-label="Breadcrumb" class={`py-3${className ? ` ${className}` : ''}`}>
+    <ol class="flex flex-wrap items-center gap-1.5 text-sm" itemscope itemtype="https://schema.org/BreadcrumbList">
+      {items.map((item, idx) => {
+        const isLast = idx === items.length - 1;
+        return (
+          <li
+            class="flex items-center gap-1.5"
+            itemprop="itemListElement"
+            itemscope
+            itemtype="https://schema.org/ListItem"
+          >
+            {isLast ? (
+              <span
+                itemprop="name"
+                aria-current="page"
+                class="text-[var(--color-text-secondary)] font-medium"
+              >
+                {item.label}
+              </span>
+            ) : (
+              <>
+                <a
+                  href={item.href}
+                  itemprop="item"
+                  class="text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] transition-colors duration-[var(--transition-fast)]"
+                >
+                  <span itemprop="name">{item.label}</span>
+                </a>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" class="shrink-0 text-[var(--color-text-muted)] opacity-50">
+                  <path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </>
+            )}
+            <meta itemprop="position" content={(idx + 1).toString()} />
+          </li>
+        );
+      })}
+    </ol>
+  </nav>
+)}
