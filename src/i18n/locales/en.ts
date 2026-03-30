@@ -277,6 +277,41 @@ export const en = {
 			de: 'Deutsch',
 		},
 	},
+	/* ── Sidebar ──────────────────────────────────────────────────────── */
+	sidebar: {
+		// Section headers
+		sectionGames: 'Games',
+		sectionPromotions: 'Promotions',
+		sectionSupport: 'Support',
+		// Menu items
+		promotions: 'Promotions',
+		vipClub: 'VIP Club',
+		vipBadge: 'NEW',
+		casino: 'Casino',
+		liveCasino: 'Live Casino',
+		cashback: 'Weekly Cashback',
+		referral: 'Referral Bonus',
+		tournaments: 'Tournaments',
+		shop: 'Bonus Shop',
+		help: 'Help Center',
+		// Casino sub-items
+		popular: 'Popular',
+		blackjack: 'Blackjack',
+		roulette: 'Roulette',
+		baccarat: 'Baccarat',
+		poker: 'Poker',
+		gameShows: 'Game Shows',
+		otherGames: 'Other Games',
+		// Help sub-items
+		faq: 'FAQ',
+		contacts: 'Contacts',
+		responsibleGaming: 'Responsible Gaming',
+		// Promo cards
+		fortuneSpinsLabel: 'Fortune Spins',
+		fortuneSpinsSub: 'Spin & Win',
+		luckyBoxLabel: 'Lucky Box',
+		luckyBoxSub: 'Hidden Prizes',
+	},
 } as const
 
 export type Translations = typeof en

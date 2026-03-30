@@ -262,4 +262,38 @@ export const de: Translations = {
 			de: 'Deutsch',
 		},
 	},
+	sidebar: {
+		// Abschnittsüberschriften
+		sectionGames: 'Spiele',
+		sectionPromotions: 'Aktionen',
+		sectionSupport: 'Support',
+		// Menüpunkte
+		promotions: 'Aktionen',
+		vipClub: 'VIP Club',
+		vipBadge: 'NEU',
+		casino: 'Casino',
+		liveCasino: 'Live Casino',
+		cashback: 'Wöchentliches Cashback',
+		referral: 'Empfehlungsbonus',
+		tournaments: 'Turniere',
+		shop: 'Bonus-Shop',
+		help: 'Hilfecenter',
+		// Casino-Unterpunkte
+		popular: 'Beliebt',
+		blackjack: 'Blackjack',
+		roulette: 'Roulette',
+		baccarat: 'Baccarat',
+		poker: 'Poker',
+		gameShows: 'Game Shows',
+		otherGames: 'Andere Spiele',
+		// Hilfe-Unterpunkte
+		faq: 'FAQ',
+		contacts: 'Kontakt',
+		responsibleGaming: 'Verantwortungsvolles Spielen',
+		// Promo-Karten
+		fortuneSpinsLabel: 'Fortune Spins',
+		fortuneSpinsSub: 'Drehen & Gewinnen',
+		luckyBoxLabel: 'Lucky Box',
+		luckyBoxSub: 'Versteckte Preise',
+	},
 }

@@ -4,6 +4,7 @@ import { ChevronDown, Globe, Menu, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import type { Locale } from '../../i18n/index'
 import { cn } from '../../lib/utils'
 import { Badge } from '../ui/Badge'
 import {
@@ -29,7 +30,7 @@ import type {
 	PromoGroupMenuItem,
 	SectionHeaderMenuItem
 } from './sidebarConfig'
-import { languages, sidebarMenuItems } from './sidebarConfig'
+import { getSidebarMenuItems, languages } from './sidebarConfig'
 
 // ── ExpandableMenuGroup ───────────────────────────────────────────────────────
 
@@ -198,10 +199,11 @@ function LanguageSelector({ currentPath }: { currentPath: string }) {
 
 interface SidebarPanelProps {
 	currentPath: string
+	locale: Locale
 	onClose: () => void
 }
 
-function SidebarPanel({ currentPath, onClose }: SidebarPanelProps) {
+function SidebarPanel({ currentPath, locale, onClose }: SidebarPanelProps) {
 
 	return (
 		<div
@@ -233,7 +235,7 @@ function SidebarPanel({ currentPath, onClose }: SidebarPanelProps) {
 
 			{/* Scrollable nav */}
 			<SidebarContent>
-				{sidebarMenuItems.map((item) => {
+				{getSidebarMenuItems(locale).map((item) => {
 					// ── Separator ──────────────────────────────────────────────
 					if (item.type === 'separator') {
 						return <SidebarSeparator key={item.id} />
@@ -332,10 +334,11 @@ function SidebarPanel({ currentPath, onClose }: SidebarPanelProps) {
 
 export interface AppSidebarProps {
 	currentPath?: string
+	locale?: Locale
 	className?: string
 }
 
-export default function AppSidebar({ currentPath = '/', className }: AppSidebarProps) {
+export default function AppSidebar({ currentPath = '/', locale = 'en', className }: AppSidebarProps) {
 	const [open, setOpen] = useState(false)
 	// true once the component has mounted in the browser (needed for portal + matchMedia)
 	const [mounted, setMounted] = useState(false)
@@ -476,7 +479,7 @@ export default function AppSidebar({ currentPath = '/', className }: AppSidebarP
 								}
 						}
 					>
-						<SidebarPanel currentPath={currentPath} onClose={close} />
+						<SidebarPanel currentPath={currentPath} locale={locale} onClose={close} />
 					</motion.aside>
 				</>
 			)}

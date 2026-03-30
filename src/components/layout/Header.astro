@@ -20,7 +20,7 @@ const nav  = getNavItems(locale);
     <div class="flex items-center justify-between h-16 gap-2 sm:gap-4">
 
       <!-- Sidebar trigger -->
-      <AppSidebar currentPath={Astro.url.pathname} client:load />
+      <AppSidebar currentPath={Astro.url.pathname} locale={locale} client:load />
 
       <!-- Logo -->
       <a href={`/${locale}/`} class="flex items-center gap-2 shrink-0" aria-label="Veloria – Home">
